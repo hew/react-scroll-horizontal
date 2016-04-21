@@ -33,6 +33,7 @@ export default class HorizontalScroll extends Component {
     document.firstElementChild.className.replace(/ ?locked__/, '');
   }
   componentDidUpdate (nextProps, nextState) {
+    console.log(this.refs)
     const curr = this.state.animValues
     const max = this.refs.scrollContainer.scrollWidth
     const win = window.innerWidth

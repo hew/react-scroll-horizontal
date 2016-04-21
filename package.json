@@ -54,5 +54,8 @@
       "stage-0",
       "react"
     ]
+  },
+  "dependencies": {
+    "normalize.css": "^4.1.1"
   }
 }

@@ -1,17 +1,26 @@
 import React from 'react'
 import HorizontalScroll from '..'
+import './css/index.css'
+
 
 class App extends React.Component {
+  constructor(props) {
+    super(props)
+  }
   render () {
+
+    const exampleItems = this.props.someDivs.map((item, i) => {
+      return (
+        <div key={ i } className='tile'>
+          <h1>{ item.text }</h1>
+        </div>
+      )
+    })
+
     return (
       <div style={{ height: `100vh` }}>
           <HorizontalScroll pageLock={ true }>
-            <div style={{width: `30em`, height: `100%`, backgroundColor: `blue`}}>beep</div>
-            <div style={{width: `30em`, height: `100%`, backgroundColor: `red`}}>beep</div>
-            <div style={{width: `30em`, height: `100%`, backgroundColor: `blue`}}>beep</div>
-            <div style={{width: `30em`, height: `100%`, backgroundColor: `red`}}>beep</div>
-            <div style={{width: `30em`, height: `100%`, backgroundColor: `blue`}}>beep</div>
-            <div style={{width: `30em`, height: `100%`, backgroundColor: `red`}}>beep</div>
+            { exampleItems }
           </HorizontalScroll>
       </div>
     )

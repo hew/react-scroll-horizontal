@@ -1,0 +1,16 @@
+@import '../../node_modules/normalize.css/normalize.css';
+
+.tile {
+  height: 100%;
+  width: 30em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tile h1 {
+  color: white;
+  font-weight: bold;
+}
+.tile:nth-child(odd) { background-color: purple }
+.tile:nth-child(even) { background-color: violet }
+.locked__ { overflow-y: hidden }

@@ -25,25 +25,12 @@ module.exports = {
       },
       { test: /\.json/, loader: 'json' },
       { test: /\.md/, loader: 'html!markdown-loader' },
-      { test: /\.css$/, loader: 'style!css!cssnext' }
+      { test: /\.css$/, loader: 'style!css' }
     ]
   },
 
   resolve: {
     extensions: ['', '.js', '.jsx']
-  },
-
-  cssnext: {
-    features: {
-      customProperties: {
-        variables: {
-          'font-family': '"SF UI Text", "Helvetica Neue", sans-serif',
-          'bold-font-weight': 500,
-          'heading-font-weight': 500,
-        }
-      }
-    }
   }
 
 }
-
