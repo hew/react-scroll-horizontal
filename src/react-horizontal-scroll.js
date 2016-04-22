@@ -3,18 +3,6 @@ import React, { Component, PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import { Motion, spring, presets } from 'react-motion'
 
-  /*
-    React Horizontal Scroll works pretty simply within two bounds:
-
-    * If the current position is greater than 0, we're over the lefthand edge.
-      So set the position back to 0. You'll see 1 is used in the conditional
-      to prevent an infinite loop.
-
-    * If the current position is less than the bounds, we've hit the right edge.
-      So set the position back to the bounds. Bounds + 1 is used in the conditional
-      to prevent an infinite loop.
-  */
-
 export default class HorizontalScroll extends Component {
   constructor(props) {
     super(props)
@@ -33,12 +21,10 @@ export default class HorizontalScroll extends Component {
     document.firstElementChild.className.replace(/ ?locked__/, '');
   }
   componentDidUpdate (nextProps, nextState) {
-    console.log(this.refs)
     const curr = this.state.animValues
     const max = this.refs.scrollContainer.scrollWidth
-    const win = window.innerWidth
+    const win = this.refs.scrollContainer.offsetParent.offsetWidth
     const bounds = -(max - win)
-
     if (curr >= 1) {
       this._resetMin()
     }
@@ -46,13 +32,16 @@ export default class HorizontalScroll extends Component {
       let x = bounds + 1
       this._resetMax(x)
     }
-
   }
   _onScrollStart = (e) => {
       e.preventDefault()
       let curr = this.state.animValues
-      let mouseReverse = -(e.deltaY)
-      this.setState({ animValues: curr + mouseReverse })
+      if (this.props.reverseScroll) {
+        let mouseReverse = -(e.deltaY)
+        this.setState({ animValues: curr + mouseReverse })
+      }
+      let mouse = e.deltaY
+      this.setState({ animValues: curr + mouse })
   }
   _resetMin = () => {
     this.setState({ animValues: 0 })
@@ -67,9 +56,7 @@ export default class HorizontalScroll extends Component {
        height: width ? width : `100%`,
        width: width ? width : `100%`
     }
-
     return(
-
       <div
         onWheel={this._onScrollStart}
         ref='scrollContainer'

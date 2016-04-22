@@ -18,11 +18,23 @@ class App extends React.Component {
     })
 
     return (
-      <div style={{ height: `100vh` }}>
-          <HorizontalScroll pageLock={ true }>
-            { exampleItems }
-          </HorizontalScroll>
-      </div>
+      <main>
+
+        <h1 className='center'>Full Width</h1>
+        <div style={{ height: `33vh`}}>
+            <HorizontalScroll pageLock={ true } reverseScroll={ true }>
+              { exampleItems }
+            </HorizontalScroll>
+        </div>
+
+        <h1 className='center'>Some Other Width</h1>
+        <div style={{ height: `33vh`, width: `66%`, overflow: `hidden`}}>
+            <HorizontalScroll >
+              { exampleItems }
+            </HorizontalScroll>
+        </div>
+
+      </main>
     )
   }
 }

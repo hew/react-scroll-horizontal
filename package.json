@@ -6,7 +6,7 @@
   "scripts": {
     "prepublish": "babel src --out-dir dist",
     "dev": "webpack-dev-server --progress --colors --config webpack.dev.config.js",
-    "docs": "webpack -p --progress --colors",
+    "docs": "NODE_ENV=production webpack -p --progress --colors",
     "start": "npm run dev"
   },
   "author": "Matthew Jones",
