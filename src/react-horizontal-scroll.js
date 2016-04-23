@@ -21,10 +21,10 @@ export default class HorizontalScroll extends Component {
     document.firstElementChild.className.replace(/ ?locked__/, '');
   }
   componentDidUpdate (nextProps, nextState) {
-    const curr = this.state.animValues
-    const max = this.refs.scrollContainer.scrollWidth
-    const win = this.refs.scrollContainer.offsetParent.offsetWidth
-    const bounds = -(max - win)
+    let curr = this.state.animValues
+    let max = this.refs.scrollContainer.lastElementChild.scrollWidth
+    let win = this.refs.scrollContainer.offsetWidth
+    let bounds = -(max - win)
     if (curr >= 1) {
       this._resetMin()
     }
@@ -54,7 +54,8 @@ export default class HorizontalScroll extends Component {
     const styles = {
        outline: `2px solid red`,
        height: width ? width : `100%`,
-       width: width ? width : `100%`
+       width: width ? width : `100%`,
+       overflow: `hidden`
     }
     return(
       <div
@@ -62,6 +63,7 @@ export default class HorizontalScroll extends Component {
         ref='scrollContainer'
         className='scroll-container'
         style={styles}
+        {...this.props}
         >
         <Motion
           style={{
