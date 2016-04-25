@@ -14,4 +14,5 @@
 .tile:nth-child(odd) { background-color: purple }
 .tile:nth-child(even) { background-color: violet }
 .locked__ { overflow-y: hidden }
-.center { text-align: center }
+.center   { text-align: center }
+.mt       { margin-top: 3rem   }

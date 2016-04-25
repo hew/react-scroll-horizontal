@@ -39,11 +39,17 @@ class ScrollingHorizontally extends Component {
 }
 
 
+## Overview
+
+I set out to make this component with an idea that you should be able to use React's
+state system to efficiently handle `mouseWheel` events in conjunction with some kind of
+animation library. That is, to move a div back and forth as the user scrolls.
+
+As it stands now, the basic idea has been implemented, but I am in a situation where
+certain mice are giving
+
+
 ```
 
-## Performance
-
-I have yet to do any performance audits, and since the Grid component listens to window resize events,
-this probably has some performance issues. Any help in that area would be greatly appreciated.
 
 MIT License
