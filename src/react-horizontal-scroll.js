@@ -18,19 +18,20 @@ export default class HorizontalScroll extends Component {
     }
   }
   componentWillUnmount() {
-    // Always remove it when unmounting
+    if (this.props.pageLock) {
     document.firstElementChild.className =
     document.firstElementChild.className.replace(/ ?locked__/, '');
+    }
   }
   componentDidUpdate (nextProps, nextState) {
     /*
-      CDU in this case basically just watches to make sure the
-      animation values/scroll distance is kept between the bounds
-      of the child and the parent of <HorizontalScroll>
+      CDU watches to make sure the animation values/scroll
+      distance is kept between the bounds of the child's width
+      and width <HorizontalScroll>
      */
     const curr = this.state.animValues
-    const max = this.refs.scrollContainer.lastElementChild.scrollWidth
-    const win = this.refs.scrollContainer.offsetWidth
+    const max = this.refs.hscrollContainer.lastElementChild.scrollWidth
+    const win = this.refs.hscrollContainer.offsetWidth
     const bounds = -(max - win)
     if (curr >= 1) {
       this._resetMin()
@@ -42,10 +43,7 @@ export default class HorizontalScroll extends Component {
   }
   _onScrollStart = (e) => {
       e.preventDefault()
-      // Normalize the mouse deltas across devices
-      const deltaY = Math.max(-1, Math.min(1, (e.deltaY || -e.detail)))
-      // Speed up things a bit
-      const mouseY = deltaY * 100
+      const mouseY = e.deltaY
       // Bring in the existing animation values
       const animationValue  = this.state.animValues
       // Adds the reverse toggle for the component
@@ -54,9 +52,9 @@ export default class HorizontalScroll extends Component {
       const newAnimationValue          = animationValue + mouseY
       const newAnimationValueNegative  = animationValue + mouseYReverse
       if (this.props.reverseScroll) {
-        this.setState({ animValues: newAnimationValue })
-      }
         this.setState({ animValues: newAnimationValueNegative })
+      }
+        this.setState({ animValues: newAnimationValue })
   }
   _resetMin = () => { this.setState({ animValues: 0 }) }
   _resetMax = (x) => { this.setState({ animValues: x }) }
@@ -71,8 +69,7 @@ export default class HorizontalScroll extends Component {
     return(
       <div
         onWheel ={this._onScrollStart}
-        ref='scrollContainer'
-        className='scroll-container'
+        ref='hscrollContainer'
         style={styles}
         {...this.props}
         >

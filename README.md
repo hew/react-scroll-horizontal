@@ -1,12 +1,20 @@
 # React Horizontal Scroll
 
-A React component for scrolling horizontally with the **mousewheel.**
+A React component for scrolling horizontally with the mouse wheel.
 
+## How it Works
 
-## About
+Feed `<HorizontalScroll>` one child, or many children.
+So long as they have a static width, this component will
+take care of the rest.
 
-Feed `<HorizontalScroll>` one component, or many components. <br />
-It will automagically take care of the rest.
+---
+
+**Note**: This component is in a **beta**.
+I haven't explored all the animation options, and Firefox is giving slightly different deltas for some of the mice that I have
+tested. See that issue [here](https://github.com/hew/react-horizontal-scroll/issues/1).
+
+___
 
 ## Usage
 
@@ -24,68 +32,64 @@ npm i react-horizontal-scroll
 
 ```
 
-### Arbitrary Parent/Child Widths
+Props
+
+* `pageLock` - Adds a `lock__` class to the HTML body
+* `reverseScroll` - Reverses the scroll direction
+
+
+Gotchas
+
+* Uses Flexbox
+* Child item(s) must be px/em/vw - no percentages (yet)
+
+
+### Arbitrary Parent/Child Widths Example
 ```jsx
 import React, { Component } from 'react'
 import HorizontalScroll from 'react-horizontal-scroll'
 
 class ScrollingHorizontally extends Component {
   render() {
-    const child   = { width: `300%`, height: `100%`}
+    const child   = { width: `30em`, height: `100%`}
+    const parent  = { width: `60em`, height: `100%`}
     return (
       <div style={parent}>
-        <HorizontalScroll
-            pageLock      = { true || false }
-            reverseScroll = { true || false }
-            >
+        <HorizontalScroll>
             <div style={child} />
             <div style={child} />
             <div style={child} />
         </HorizontalScroll>
-
       </div>
     )
   }
 }
 ```
-### Full Width/Body Container
+### Full Width Example
 ```js
 import React, { Component } from 'react'
 import HorizontalScroll from 'react-horizontal-scroll'
 
 class ScrollingHorizontally extends Component {
   render() {
-    const child   = { width: `33em`, height: `100%`}
+    const child = { width: `300em`, height: `100%`}
     return (
-        <HorizontalScroll pageLock={ true || false }>
-            <div style={child} />
-            <div style={child} />
-            <div style={child} />
+      <body>
+        <HorizontalScroll>
+          <div style={child} />
         </HorizontalScroll>
+      </body>
+
     )
   }
 }
 ```
 
 
-## Background
-
-I set out to make this component with an idea that you should be able to use React's
-state system to efficiently handle `mouseWheel` events in conjunction with some kind of
-animation library. That is, to move a div back and forth as the user scrolls.
-
-## Performance
-
-Pretty good. Because it's almost entirely React and React Motion handling all
-the heavy lifting here, my tests so far have been seen only a few dips below 60ps.
-How does this library perform under scale? Probably pretty poorly. It was developed
-with a smaller website in mind.
-
 ## Contributing
 
 Yes, please!
 
 
-
-
+---
 MIT License
