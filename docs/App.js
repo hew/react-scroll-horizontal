@@ -1,5 +1,5 @@
 import React  from 'react'
-import HorizontalScroll  from '../dist/react-horizontal-scroll'
+import HorizontalScroll  from '../dist/react-scroll-horizontal'
 import './css/index.css'
 
 export default class App extends React.Component {
@@ -18,14 +18,14 @@ export default class App extends React.Component {
       <main>
 
         <div className="center w50 mx-auto mb">
-          <h1 className='dots'>React Horizontal Scroll</h1>
+          <h1 className='dots'>React Scroll Horizontal</h1>
           <h3>
-            Feed 	&lt;HorizontalScroll&gt; one child, or many children.
+            Feed &lt;HorizontalScroll&gt; one child, or many children.
             So long as they have a defined width/height, this component will
             take care of the rest.
           </h3>
           <div className="flex justify-center">
-            <iframe src="https://ghbtns.com/github-btn.html?user=hew&repo=react-horizontal-scroll&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+            <iframe src="https://ghbtns.com/github-btn.html?user=hew&repo=react-scroll-horizontal&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
           </div>
         </div>
         <div className="hr"></div>

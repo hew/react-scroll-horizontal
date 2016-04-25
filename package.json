@@ -1,8 +1,8 @@
 {
-  "name": "react-horizontal-scroll",
+  "name": "react-scroll-horizontal",
   "version": "0.0.1",
   "description": "Easy Horizontal Scrolling for React",
-  "main": "dist/react-horizontal-scroll.js",
+  "main": "dist/react-scroll-horizontal.js",
   "scripts": {
     "prepublish": "babel src --out-dir dist",
     "dev": "webpack-dev-server --progress --colors --config webpack.dev.config.js",
@@ -13,7 +13,9 @@
   "license": "MIT",
   "keywords": [
     "mousewheel",
-    "horizontal-scroll"
+    "horizontal-scroll",
+    "scroll-horizontal",
+    "react"
   ],
   "devDependencies": {
     "babel-cli": "^6.5.1",

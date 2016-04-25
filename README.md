@@ -19,7 +19,7 @@ ___
 ## Usage
 
 ```bash
-npm i react-horizontal-scroll
+npm i react-scroll-horizontal
 ```
 
 ```jsx
