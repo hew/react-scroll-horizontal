@@ -1,6 +1,6 @@
 {
   "name": "react-scroll-horizontal",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Easy Horizontal Scrolling for React",
   "main": "dist/react-scroll-horizontal.js",
   "scripts": {
