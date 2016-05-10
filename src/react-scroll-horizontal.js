@@ -22,21 +22,18 @@ export default class HorizontalScroll extends Component {
     }
   }
   componentWillUnmount() {
-    // Calculate the bounds of the scroll area
-    this.max = this.refs.hscrollContainer.lastElementChild.scrollWidth
-    this.win = this.refs.hscrollContainer.offsetWidth
-
     if (this.props.pageLock) {
     document.firstElementChild.className =
     document.firstElementChild.className.replace(/ ?locked__/, '');
     }
   }
   componentDidUpdate (nextProps, nextState) {
-
+    // Calculate the bounds of the scroll area
+    let max = this.refs.hscrollContainer.lastElementChild.scrollWidth
+    let win = this.refs.hscrollContainer.offsetWidth
     let curr = this.state.animValues
-    let { max, win } = this
+    let bounds = -(max - win)
 
-    const bounds = -(max - win)
     if (curr >= 1) {
       this._resetMin()
     }

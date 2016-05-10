@@ -58,10 +58,6 @@ var HorizontalScroll = function (_Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      // Calculate the bounds of the scroll area
-      this.max = this.refs.hscrollContainer.lastElementChild.scrollWidth;
-      this.win = this.refs.hscrollContainer.offsetWidth;
-
       if (this.props.pageLock) {
         document.firstElementChild.className = document.firstElementChild.className.replace(/ ?locked__/, '');
       }
@@ -69,13 +65,12 @@ var HorizontalScroll = function (_Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(nextProps, nextState) {
-
+      // Calculate the bounds of the scroll area
+      var max = this.refs.hscrollContainer.lastElementChild.scrollWidth;
+      var win = this.refs.hscrollContainer.offsetWidth;
       var curr = this.state.animValues;
-      var max = this.max;
-      var win = this.win;
-
-
       var bounds = -(max - win);
+
       if (curr >= 1) {
         this._resetMin();
       }
