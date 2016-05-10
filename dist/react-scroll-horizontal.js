@@ -16,6 +16,10 @@ var _reactDom = require('react-dom');
 
 var _reactMotion = require('react-motion');
 
+var _lodash = require('lodash.throttle');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32,34 +36,13 @@ var HorizontalScroll = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HorizontalScroll).call(this, props));
 
-    _this._onScrollStart = function (e) {
-      e.preventDefault();
-      var mouseY = e.deltaY;
-      // Bring in the existing animation values
-      var animationValue = _this.state.animValues;
-      // Adds the reverse toggle for the component
-      var mouseYReverse = -mouseY;
-      // Calculate the new animation value(s)
-      var newAnimationValue = animationValue + mouseY;
-      var newAnimationValueNegative = animationValue + mouseYReverse;
-      if (_this.props.reverseScroll) {
-        _this.setState({ animValues: newAnimationValueNegative });
-      }
-      _this.setState({ animValues: newAnimationValue });
-    };
-
-    _this._resetMin = function () {
-      _this.setState({ animValues: 0 });
-    };
-
-    _this._resetMax = function (x) {
-      _this.setState({ animValues: x });
-    };
-
     _this.state = {
       currentDeltas: 0, // Gathered from mousewheel
       animValues: 0 // Fed to React Motion
     };
+    _this._onScrollStart = _this._onScrollStart.bind(_this);
+    _this._resetMin = _this._resetMin.bind(_this);
+    _this._resetMax = _this._resetMax.bind(_this);
     return _this;
   }
 
@@ -75,6 +58,10 @@ var HorizontalScroll = function (_Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
+      // Calculate the bounds of the scroll area
+      this.max = this.refs.hscrollContainer.lastElementChild.scrollWidth;
+      this.win = this.refs.hscrollContainer.offsetWidth;
+
       if (this.props.pageLock) {
         document.firstElementChild.className = document.firstElementChild.className.replace(/ ?locked__/, '');
       }
@@ -82,14 +69,12 @@ var HorizontalScroll = function (_Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(nextProps, nextState) {
-      /*
-        CDU watches to make sure the animation values/scroll
-        distance is kept between the bounds of the child's width
-        and width <HorizontalScroll>
-       */
+
       var curr = this.state.animValues;
-      var max = this.refs.hscrollContainer.lastElementChild.scrollWidth;
-      var win = this.refs.hscrollContainer.offsetWidth;
+      var max = this.max;
+      var win = this.win;
+
+
       var bounds = -(max - win);
       if (curr >= 1) {
         this._resetMin();
@@ -100,14 +85,50 @@ var HorizontalScroll = function (_Component) {
       }
     }
   }, {
+    key: '_onScrollStart',
+    value: function _onScrollStart(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var mouseY = e.deltaY;
+      // Bring in the existing animation values
+      var animationValue = this.state.animValues;
+      // Adds the reverse toggle for the component
+      var mouseYReverse = -mouseY;
+      // Calculate the new animation value(s)
+      var newAnimationValue = animationValue + mouseY;
+      var newAnimationValueNegative = animationValue + mouseYReverse;
+
+      var scrolling = function scrolling() {
+        if (_this2.props.reverseScroll) {
+          _this2.setState({ animValues: newAnimationValueNegative });
+        }
+        _this2.setState({ animValues: newAnimationValue });
+      };
+
+      scrolling();
+    }
+  }, {
+    key: '_resetMin',
+    value: function _resetMin() {
+      this.setState({ animValues: 0 });
+    }
+  }, {
+    key: '_resetMax',
+    value: function _resetMax(x) {
+      this.setState({ animValues: x });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _props = this.props;
       var width = _props.width;
       var height = _props.height;
+      var config = _props.config;
 
+      var springConfig = config ? config : _reactMotion.presets.noWobble;
       var styles = {
         height: width ? width : '100%',
         width: width ? width : '100%',
@@ -124,7 +145,7 @@ var HorizontalScroll = function (_Component) {
         _react2.default.createElement(
           _reactMotion.Motion,
           {
-            style: { z: (0, _reactMotion.spring)(this.state.animValues, _reactMotion.presets.noWobble)
+            style: { z: (0, _reactMotion.spring)(this.state.animValues, springConfig)
             } },
           function (_ref) {
             var z = _ref.z;
@@ -138,7 +159,7 @@ var HorizontalScroll = function (_Component) {
             return _react2.default.createElement(
               'div',
               { style: scrollingElementStyles },
-              _this2.props.children
+              _this3.props.children
             );
           }
         )

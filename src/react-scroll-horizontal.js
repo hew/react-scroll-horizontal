@@ -20,14 +20,12 @@ export default class HorizontalScroll extends Component {
       const orig = document.firstElementChild.className;
       document.firstElementChild.className = orig + (orig ? ' ' : '') + 'locked__';
     }
-
+  }
+  componentWillUnmount() {
     // Calculate the bounds of the scroll area
     this.max = this.refs.hscrollContainer.lastElementChild.scrollWidth
     this.win = this.refs.hscrollContainer.offsetWidth
-    this.setState({animValues: this.win})
 
-  }
-  componentWillUnmount() {
     if (this.props.pageLock) {
     document.firstElementChild.className =
     document.firstElementChild.className.replace(/ ?locked__/, '');
