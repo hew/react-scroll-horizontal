@@ -26,6 +26,7 @@ npm i react-scroll-horizontal
   <HorizontalScroll
       pageLock      = { true || false }
       reverseScroll = { true || false }
+      config        = {{ stiffness: int, damping: int }}
       >
       { children }
   </HorizontalScroll>
@@ -36,6 +37,7 @@ Props
 
 * `pageLock` - Adds a `lock__` class to the HTML body
 * `reverseScroll` - Reverses the scroll direction
+* `config`        - Passes a spring config object to React Motion
 
 
 Gotchas

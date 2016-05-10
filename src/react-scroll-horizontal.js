@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import { Motion, spring, presets } from 'react-motion'
+import throttle from 'lodash.throttle'
 
 export default class HorizontalScroll extends Component {
   constructor(props) {
@@ -9,6 +10,9 @@ export default class HorizontalScroll extends Component {
       currentDeltas: 0,  // Gathered from mousewheel
       animValues: 0      // Fed to React Motion
     }
+    this._onScrollStart = this._onScrollStart.bind(this)
+    this._resetMin      = this._resetMin.bind(this)
+    this._resetMax      = this._resetMax.bind(this)
   }
   componentDidMount() {
     // Place the 'lock__' class on the HTML element - if toggled
@@ -16,6 +20,12 @@ export default class HorizontalScroll extends Component {
       const orig = document.firstElementChild.className;
       document.firstElementChild.className = orig + (orig ? ' ' : '') + 'locked__';
     }
+
+    // Calculate the bounds of the scroll area
+    this.max = this.refs.hscrollContainer.lastElementChild.scrollWidth
+    this.win = this.refs.hscrollContainer.offsetWidth
+    this.setState({animValues: this.win})
+
   }
   componentWillUnmount() {
     if (this.props.pageLock) {
@@ -24,14 +34,10 @@ export default class HorizontalScroll extends Component {
     }
   }
   componentDidUpdate (nextProps, nextState) {
-    /*
-      CDU watches to make sure the animation values/scroll
-      distance is kept between the bounds of the child's width
-      and width <HorizontalScroll>
-     */
-    const curr = this.state.animValues
-    const max = this.refs.hscrollContainer.lastElementChild.scrollWidth
-    const win = this.refs.hscrollContainer.offsetWidth
+
+    let curr = this.state.animValues
+    let { max, win } = this
+
     const bounds = -(max - win)
     if (curr >= 1) {
       this._resetMin()
@@ -41,25 +47,31 @@ export default class HorizontalScroll extends Component {
       this._resetMax(x)
     }
   }
-  _onScrollStart = (e) => {
+  _onScrollStart (e) {
       e.preventDefault()
-      const mouseY = e.deltaY
+      let mouseY = e.deltaY
       // Bring in the existing animation values
-      const animationValue  = this.state.animValues
+      let animationValue  = this.state.animValues
       // Adds the reverse toggle for the component
-      const mouseYReverse   = -(mouseY)
+      let mouseYReverse   = -(mouseY)
       // Calculate the new animation value(s)
-      const newAnimationValue          = animationValue + mouseY
-      const newAnimationValueNegative  = animationValue + mouseYReverse
-      if (this.props.reverseScroll) {
-        this.setState({ animValues: newAnimationValueNegative })
+      let newAnimationValue          = animationValue + mouseY
+      let newAnimationValueNegative  = animationValue + mouseYReverse
+
+      const scrolling = () => {
+        if (this.props.reverseScroll) {
+            this.setState({ animValues: newAnimationValueNegative })
+        }
+            this.setState({ animValues: newAnimationValue })
       }
-        this.setState({ animValues: newAnimationValue })
+
+      scrolling()
   }
-  _resetMin = () => { this.setState({ animValues: 0 }) }
-  _resetMax = (x) => { this.setState({ animValues: x }) }
-  render() {
-    const { width, height } = this.props
+  _resetMin () { this.setState({ animValues: 0 }) }
+  _resetMax (x) { this.setState({ animValues: x }) }
+  render () {
+    const { width, height, config } = this.props
+    const springConfig = config ? config : presets.noWobble
     const styles = {
        height: width ? width : `100%`,
        width: width ? width : `100%`,
@@ -68,28 +80,28 @@ export default class HorizontalScroll extends Component {
     }
     return(
       <div
-        onWheel ={this._onScrollStart}
+        onWheel={this._onScrollStart}
         ref='hscrollContainer'
         style={styles}
         {...this.props}
         >
         <Motion
-          style={{ z: spring(this.state.animValues, presets.noWobble)
-        }}>
-        {({z}) => {
-        const scrollingElementStyles = {
-          transform: `translate3d(${z}px, 0,0)`,
-          display: `inline-flex`,
-          height: `100%`,
-          position: `absolute`
-        }
-        return (
-          <div style={scrollingElementStyles} >
-            { this.props.children }
-          </div>
-             )
-           }}
-         </Motion>
+          style={{ z: spring(this.state.animValues, springConfig)
+          }}>
+          {({z}) => {
+            const scrollingElementStyles = {
+              transform: `translate3d(${z}px, 0,0)`,
+              display: `inline-flex`,
+              height: `100%`,
+              position: `absolute`
+            }
+            return (
+              <div style={scrollingElementStyles} >
+                { this.props.children }
+              </div>
+            )
+          }}
+        </Motion>
       </div>
      )
    }

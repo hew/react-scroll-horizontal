@@ -1,5 +1,5 @@
 import React  from 'react'
-import HorizontalScroll  from '../dist/react-scroll-horizontal'
+import HorizontalScroll  from '../src/react-scroll-horizontal'
 import './css/index.css'
 
 export default class App extends React.Component {
@@ -36,9 +36,9 @@ export default class App extends React.Component {
             </HorizontalScroll>
         </div>
         <div className="hr"></div>
-        <h1 className='center'>Arbitrary Width</h1>
+        <h1 className='center'>Arbitrary Width, Spring Config</h1>
         <div style={{ height: `22.7em`, width: `66%`}} >
-            <HorizontalScroll>
+            <HorizontalScroll config={{ stiffness: 160, damping: 110}}>
               { exampleItems }
             </HorizontalScroll>
         </div>

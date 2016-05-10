@@ -59,6 +59,8 @@
   },
   "dependencies": {
     "animated": "^0.1.2",
-    "normalize.css": "^4.1.1"
+    "lodash.throttle": "^4.0.1",
+    "normalize.css": "^4.1.1",
+    "react-throttle": "^0.2.0"
   }
 }
