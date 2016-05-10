@@ -24,8 +24,8 @@ npm i react-scroll-horizontal
 
 ```jsx
   <HorizontalScroll
-      pageLock      = { true || false }
-      reverseScroll = { true || false }
+      pageLock      = { bool }
+      reverseScroll = { bool }
       config        = {{ stiffness: int, damping: int }}
       >
       { children }
