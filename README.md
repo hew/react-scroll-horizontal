@@ -2,6 +2,10 @@
 
 A React component for scrolling horizontally with the mouse wheel.
 
+## Demo 
+
+[http://hew.github.io/react-scroll-horizontal](http://hew.github.io/react-scroll-horizontal)
+
 ## How it Works
 
 Feed `<HorizontalScroll>` one child, or many children.
