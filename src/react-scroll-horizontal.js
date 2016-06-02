@@ -7,7 +7,6 @@ export default class HorizontalScroll extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentDeltas: 0,  // Gathered from mousewheel
       animValues: 0      // Fed to React Motion
     }
     this._onScrollStart = this._onScrollStart.bind(this)
