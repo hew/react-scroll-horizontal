@@ -20,6 +20,5 @@ module.exports = _.extend(config, {
   devServer: {
     hot: true
   }
-
 })
 

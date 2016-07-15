@@ -31,7 +31,7 @@ export default class App extends React.Component {
         <div className="hr"></div>
         <h1 className='center'>Full Width</h1>
         <div style={{ height: `22.7em`}}>
-            <HorizontalScroll>
+            <HorizontalScroll >
               { exampleItems }
             </HorizontalScroll>
         </div>

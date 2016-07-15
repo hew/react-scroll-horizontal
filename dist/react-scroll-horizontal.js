@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -14,11 +12,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = require('react-dom');
 
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 var _reactMotion = require('react-motion');
-
-var _lodash = require('lodash.throttle');
-
-var _lodash2 = _interopRequireDefault(_lodash);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36,13 +32,12 @@ var HorizontalScroll = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HorizontalScroll).call(this, props));
 
-    _this.state = {
-      currentDeltas: 0, // Gathered from mousewheel
-      animValues: 0 // Fed to React Motion
-    };
-    _this._onScrollStart = _this._onScrollStart.bind(_this);
-    _this._resetMin = _this._resetMin.bind(_this);
-    _this._resetMax = _this._resetMax.bind(_this);
+    _this.state = { animValues: 0 };
+
+    _this.onScrollStart = _this.onScrollStart.bind(_this);
+    _this.resetMin = _this.resetMin.bind(_this);
+    _this.resetMax = _this.resetMax.bind(_this);
+
     return _this;
   }
 
@@ -53,64 +48,72 @@ var HorizontalScroll = function (_Component) {
       if (this.props.pageLock) {
         var orig = document.firstElementChild.className;
         document.firstElementChild.className = orig + (orig ? ' ' : '') + 'locked__';
-      }
+      } else return;
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       if (this.props.pageLock) {
         document.firstElementChild.className = document.firstElementChild.className.replace(/ ?locked__/, '');
-      }
+      } else return;
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(nextProps, nextState) {
+
       // Calculate the bounds of the scroll area
-      var max = this.refs.hscrollContainer.lastElementChild.scrollWidth;
-      var win = this.refs.hscrollContainer.offsetWidth;
+      var el = _reactDom2.default.findDOMNode(this.refs['hScrollParent']);
+
+      var max = el.lastElementChild.scrollWidth;
+      var win = el.offsetWidth;
+
+      // Get the new animation values
       var curr = this.state.animValues;
+
+      // Establish the bounds. We do this every time b/c it might change.
       var bounds = -(max - win);
 
+      // Logic to hold everything in place
       if (curr >= 1) {
-        this._resetMin();
-      }
-      if (curr <= bounds) {
+        this.resetMin();
+      } else if (curr <= bounds) {
         var x = bounds + 1;
-        this._resetMax(x);
+        this.resetMax(x);
       }
     }
   }, {
-    key: '_onScrollStart',
-    value: function _onScrollStart(e) {
+    key: 'onScrollStart',
+    value: function onScrollStart(e) {
       var _this2 = this;
 
       e.preventDefault();
-      var mouseY = e.deltaY;
+      // If scrolling on x axis, change to y axis
+      // Otherwise just get the y deltas
+      // Basically, this for Apple mice that allow 
+      // horizontal scrolling by default
+      var rawData = e.deltaY ? e.deltaY : e.deltaX;
+      var mouseY = Math.floor(rawData);
+
       // Bring in the existing animation values
       var animationValue = this.state.animValues;
-      // Adds the reverse toggle for the component
-      var mouseYReverse = -mouseY;
-      // Calculate the new animation value(s)
       var newAnimationValue = animationValue + mouseY;
-      var newAnimationValueNegative = animationValue + mouseYReverse;
+      var newAnimationValueNegative = animationValue - mouseY;
 
       var scrolling = function scrolling() {
-        if (_this2.props.reverseScroll) {
-          _this2.setState({ animValues: newAnimationValueNegative });
-        }
-        _this2.setState({ animValues: newAnimationValue });
+        _this2.props.reverseScroll ? _this2.setState({ animValues: newAnimationValueNegative }) : _this2.setState({ animValues: newAnimationValue });
       };
 
-      scrolling();
+      // Begin Scrolling Animation
+      requestAnimationFrame(scrolling);
     }
   }, {
-    key: '_resetMin',
-    value: function _resetMin() {
+    key: 'resetMin',
+    value: function resetMin() {
       this.setState({ animValues: 0 });
     }
   }, {
-    key: '_resetMax',
-    value: function _resetMax(x) {
+    key: 'resetMax',
+    value: function resetMax(x) {
       this.setState({ animValues: x });
     }
   }, {
@@ -119,29 +122,32 @@ var HorizontalScroll = function (_Component) {
       var _this3 = this;
 
       var _props = this.props;
-      var width = _props.width;
-      var height = _props.height;
       var config = _props.config;
+      var style = _props.style;
+      var width = style.width;
+      var height = style.height;
 
       var springConfig = config ? config : _reactMotion.presets.noWobble;
+
+      // Styles
       var styles = {
-        height: width ? width : '100%',
+        height: height ? height : '100%',
         width: width ? width : '100%',
         overflow: 'hidden',
         position: 'relative'
       };
+
       return _react2.default.createElement(
         'div',
-        _extends({
-          onWheel: this._onScrollStart,
-          ref: 'hscrollContainer',
-          style: styles
-        }, this.props),
+        {
+          onWheel: this.onScrollStart,
+          ref: 'hScrollParent',
+          style: styles,
+          className: 'scroll-horizontal'
+        },
         _react2.default.createElement(
           _reactMotion.Motion,
-          {
-            style: { z: (0, _reactMotion.spring)(this.state.animValues, springConfig)
-            } },
+          { style: { z: (0, _reactMotion.spring)(this.state.animValues, springConfig) } },
           function (_ref) {
             var z = _ref.z;
 
@@ -149,7 +155,8 @@ var HorizontalScroll = function (_Component) {
               transform: 'translate3d(' + z + 'px, 0,0)',
               display: 'inline-flex',
               height: '100%',
-              position: 'absolute'
+              position: 'absolute',
+              willChange: 'transform'
             };
             return _react2.default.createElement(
               'div',
@@ -166,3 +173,18 @@ var HorizontalScroll = function (_Component) {
 }(_react.Component);
 
 exports.default = HorizontalScroll;
+
+
+HorizontalScroll.proptypes = {
+  reverseScroll: _react.PropTypes.bool,
+  pageLock: _react.PropTypes.bool,
+  config: _react.PropTypes.object,
+  style: _react.PropTypes.object
+};
+
+HorizontalScroll.defaultProps = {
+  reverseScroll: false,
+  pageLock: false,
+  config: null,
+  style: { width: '100%', height: '100%' }
+};

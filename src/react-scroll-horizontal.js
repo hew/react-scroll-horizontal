@@ -1,102 +1,142 @@
 import React, { Component, PropTypes } from 'react'
-import { findDOMNode } from 'react-dom'
+import DOM from 'react-dom'
 import { Motion, spring, presets } from 'react-motion'
-import throttle from 'lodash.throttle'
 
 export default class HorizontalScroll extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      animValues: 0      // Fed to React Motion
-    }
-    this._onScrollStart = this._onScrollStart.bind(this)
-    this._resetMin      = this._resetMin.bind(this)
-    this._resetMax      = this._resetMax.bind(this)
+    
+    this.state = { animValues: 0 }
+
+    this.onScrollStart = this.onScrollStart.bind(this)
+    this.resetMin      = this.resetMin.bind(this)
+    this.resetMax      = this.resetMax.bind(this)
+
   }
+
   componentDidMount() {
     // Place the 'lock__' class on the HTML element - if toggled
     if (this.props.pageLock) {
       const orig = document.firstElementChild.className;
       document.firstElementChild.className = orig + (orig ? ' ' : '') + 'locked__';
-    }
+    } else return 
   }
+
   componentWillUnmount() {
     if (this.props.pageLock) {
     document.firstElementChild.className =
     document.firstElementChild.className.replace(/ ?locked__/, '');
-    }
+    } else return
   }
-  componentDidUpdate (nextProps, nextState) {
+
+  componentDidUpdate(nextProps, nextState) {
+
     // Calculate the bounds of the scroll area
-    let max = this.refs.hscrollContainer.lastElementChild.scrollWidth
-    let win = this.refs.hscrollContainer.offsetWidth
-    let curr = this.state.animValues
-    let bounds = -(max - win)
+    let el = DOM.findDOMNode(this.refs['hScrollParent'])
 
+    let max = el.lastElementChild.scrollWidth
+    let win = el.offsetWidth
+
+    // Get the new animation values
+    var curr = this.state.animValues
+
+    // Establish the bounds. We do this every time b/c it might change.
+    var bounds = -(max - win)
+
+    // Logic to hold everything in place
     if (curr >= 1) {
-      this._resetMin()
+      this.resetMin()
+    } else if (curr <= bounds) {
+      var x = bounds + 1
+      this.resetMax(x)
     }
-    if (curr <= bounds) {
-      let x = bounds + 1
-      this._resetMax(x)
+
+  }
+
+  calculateBounds () {
+
+  }
+    
+  onScrollStart(e) {
+    e.preventDefault()
+    // If scrolling on x axis, change to y axis
+    // Otherwise just get the y deltas
+    // Basically, this for Apple mice that allow 
+    // horizontal scrolling by default
+    var rawData = e.deltaY ? e.deltaY : e.deltaX
+    var mouseY = Math.floor(rawData)
+
+    // Bring in the existing animation values
+    var animationValue            = this.state.animValues
+    var newAnimationValue         = (animationValue + mouseY)
+    var newAnimationValueNegative = (animationValue - mouseY)
+
+    var scrolling = () => {
+      this.props.reverseScroll
+        ?  this.setState({ animValues: newAnimationValueNegative })
+        :  this.setState({ animValues: newAnimationValue })
     }
-  }
-  _onScrollStart (e) {
-      e.preventDefault()
-      let mouseY = e.deltaY
-      // Bring in the existing animation values
-      let animationValue  = this.state.animValues
-      // Adds the reverse toggle for the component
-      let mouseYReverse   = -(mouseY)
-      // Calculate the new animation value(s)
-      let newAnimationValue          = animationValue + mouseY
-      let newAnimationValueNegative  = animationValue + mouseYReverse
 
-      const scrolling = () => {
-        if (this.props.reverseScroll) {
-            this.setState({ animValues: newAnimationValueNegative })
-        }
-            this.setState({ animValues: newAnimationValue })
-      }
-
-      scrolling()
+    // Begin Scrolling Animation
+    requestAnimationFrame(scrolling)
   }
-  _resetMin () { this.setState({ animValues: 0 }) }
-  _resetMax (x) { this.setState({ animValues: x }) }
-  render () {
-    const { width, height, config } = this.props
+
+  resetMin() { this.setState({ animValues: 0 }) }
+
+  resetMax(x) { this.setState({ animValues: x }) }
+
+  render() {
+      
+    const { config, style } = this.props
+    const { width, height } = style 
     const springConfig = config ? config : presets.noWobble
+
+    // Styles
     const styles = {
-       height: width ? width : `100%`,
-       width: width ? width : `100%`,
-       overflow: `hidden`,
-       position: `relative`
+      height: height ? height : `100%`,
+      width: width ? width : `100%`,
+      overflow: `hidden`,
+      position: `relative`
     }
-    return(
-      <div
-        onWheel={this._onScrollStart}
-        ref='hscrollContainer'
-        style={styles}
-        {...this.props}
-        >
-        <Motion
-          style={{ z: spring(this.state.animValues, springConfig)
-          }}>
-          {({z}) => {
-            const scrollingElementStyles = {
-              transform: `translate3d(${z}px, 0,0)`,
-              display: `inline-flex`,
-              height: `100%`,
-              position: `absolute`
-            }
-            return (
-              <div style={scrollingElementStyles} >
-                { this.props.children }
-              </div>
-            )
-          }}
+
+    return (
+      <div 
+        onWheel={this.onScrollStart}
+        ref='hScrollParent'
+        style={ styles }
+        className='scroll-horizontal'
+      >
+        <Motion style={ { z: spring(this.state.animValues, springConfig) } }>
+          { ({z}) => {
+              const scrollingElementStyles = {
+                transform: `translate3d(${z}px, 0,0)`,
+                display: `inline-flex`,
+                height: `100%`,
+                position: `absolute`,
+                willChange:`transform` 
+              }
+              return (
+                <div style={ scrollingElementStyles }>
+                  { this.props.children }
+                </div>
+              )
+            } }
         </Motion>
       </div>
-     )
-   }
+    )
+  }
+}
+
+HorizontalScroll.proptypes = {
+  reverseScroll: PropTypes.bool,
+  pageLock: PropTypes.bool,
+  config: PropTypes.object,
+  style: PropTypes.object
+}
+
+HorizontalScroll.defaultProps = {
+  reverseScroll: false,
+  pageLock: false,
+  config: null,
+  style: { width: `100%`, height: `100%` }
 }

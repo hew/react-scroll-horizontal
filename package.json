@@ -5,8 +5,8 @@
   "main": "dist/react-scroll-horizontal.js",
   "scripts": {
     "prepublish": "babel src --out-dir dist",
-    "dev": "webpack-dev-server --progress --colors --config webpack.dev.config.js",
-    "docs": "NODE_ENV=production webpack -p --progress --colors",
+    "dev": "webpack-dev-server --progress --color --config webpack.dev.config.js",
+    "docs": "NODE_ENV=production webpack -p --progress --color",
     "start": "npm run dev"
   },
   "author": "Matthew Jones",
@@ -25,18 +25,18 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.5.2",
-    "css-loader": "^0.15.1",
-    "cssnext-loader": "^1.0.1",
-    "file-loader": "^0.8.4",
-    "html-loader": "^0.3.0",
-    "json-loader": "^0.5.2",
-    "raw-loader": "^0.5.1",
+    "css-loader": "*",
+    "postcss-loader": "*",
+    "file-loader": "*",
+    "html-loader": "*",
+    "json-loader": "*",
+    "raw-loader": "*",
+    "react-motion": "*",
     "react": "^15.0.1",
     "react-dom": "^15.0.0",
-    "react-motion": "*",
     "react-hot-loader": "^1.3.0",
     "style-loader": "^0.12.3",
-    "webpack": "^1.10.1",
+    "webpack": "2.1.0-beta.17",
     "webpack-dev-server": "^1.10.1"
   },
   "peerDependencies": {
@@ -58,9 +58,6 @@
     ]
   },
   "dependencies": {
-    "animated": "^0.1.2",
-    "lodash.throttle": "^4.0.1",
-    "normalize.css": "^4.1.1",
-    "react-throttle": "^0.2.0"
+    "normalize.css": "^4.2.0"
   }
 }
