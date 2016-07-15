@@ -1,6 +1,6 @@
 # React Scroll Horizontal
 
-A React component for scrolling horizontally with the mouse wheel.
+[WIP] A React component for scrolling horizontally with the mouse wheel.
 
 ## Demo 
 
@@ -11,13 +11,6 @@ A React component for scrolling horizontally with the mouse wheel.
 Feed `<HorizontalScroll>` one child, or many children.
 So long as they have a static width, this component will
 take care of the rest.
-
----
-
-**Note**: This component is in a **beta**.
-I haven't explored all the animation options, and Firefox is giving slightly different deltas for some of the mice that I have
-tested. See that issue [here](https://github.com/hew/react-horizontal-scroll/issues/1).
-
 ___
 
 ## Usage
@@ -28,12 +21,12 @@ npm i react-scroll-horizontal
 
 ```jsx
   <HorizontalScroll
-      pageLock      = { bool }
-      reverseScroll = { bool }
-      style         = { object }
-      config        = {{ stiffness: int, damping: int }}
-      >
-      { children }
+    pageLock      = { bool }
+    reverseScroll = { bool }
+    style         = { object }
+    config        = {{ stiffness: int, damping: int }}
+    >
+     { children }
   </HorizontalScroll>
 
 ```
@@ -42,7 +35,7 @@ Props
 
 * `pageLock`       - Adds a `lock__` class to the HTML body
 * `reverseScroll`  - Reverses the scroll direction
-* `style`          - Passes a spring config object to React Motion
+* `style`          - Pass a style object through to parent div
 * `config`         - Passes a spring config object to React Motion
 
 

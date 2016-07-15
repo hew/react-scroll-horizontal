@@ -84,9 +84,6 @@ var HorizontalScroll = function (_Component) {
       }
     }
   }, {
-    key: 'calculateBounds',
-    value: function calculateBounds() {}
-  }, {
     key: 'onScrollStart',
     value: function onScrollStart(e) {
       var _this2 = this;

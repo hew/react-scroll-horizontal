@@ -52,10 +52,6 @@ export default class HorizontalScroll extends Component {
     }
 
   }
-
-  calculateBounds () {
-
-  }
     
   onScrollStart(e) {
     e.preventDefault()
