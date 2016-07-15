@@ -96,7 +96,8 @@ export default class HorizontalScroll extends Component {
       height: height ? height : `100%`,
       width: width ? width : `100%`,
       overflow: `hidden`,
-      position: `relative`
+      position: `relative`,
+      ...styles
     }
 
     return (
