@@ -32,7 +32,7 @@ var HorizontalScroll = function (_Component) {
   function HorizontalScroll(props) {
     _classCallCheck(this, HorizontalScroll);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HorizontalScroll).call(this, props));
+    var _this = _possibleConstructorReturn(this, (HorizontalScroll.__proto__ || Object.getPrototypeOf(HorizontalScroll)).call(this, props));
 
     _this.state = { animValues: 0 };
 
@@ -91,7 +91,7 @@ var HorizontalScroll = function (_Component) {
       e.preventDefault();
       // If scrolling on x axis, change to y axis
       // Otherwise just get the y deltas
-      // Basically, this for Apple mice that allow 
+      // Basically, this for Apple mice that allow
       // horizontal scrolling by default
       var rawData = e.deltaY ? e.deltaY : e.deltaX;
       var mouseY = Math.floor(rawData);
