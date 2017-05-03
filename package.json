@@ -18,28 +18,30 @@
     "react"
   ],
   "devDependencies": {
-    "babel-cli": "^6.5.1",
-    "babel-core": "^6.5.2",
-    "babel-loader": "^6.2.4",
-    "babel-preset-es2015": "^6.5.0",
-    "babel-preset-react": "^6.5.0",
-    "babel-preset-stage-0": "^6.5.0",
-    "babel-register": "^6.5.2",
-    "css-loader": "*",
-    "postcss-loader": "*",
-    "file-loader": "*",
-    "html-loader": "*",
-    "json-loader": "*",
-    "raw-loader": "*",
-    "react": "^15.0.1",
-    "react-dom": "^15.0.0",
-    "react-hot-loader": "^1.3.0",
-    "style-loader": "^0.12.3",
-    "webpack": "2.1.0-beta.17",
-    "webpack-dev-server": "^1.10.1"
+    "babel-cli": "*",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "css-loader": "^0.28.1",
+    "file-loader": "^0.11.1",
+    "html-loader": "^0.4.5",
+    "json-loader": "^0.5.4",
+    "normalize.css": "^7.0.0",
+    "postcss-loader": "^1.3.3",
+    "raw-loader": "^0.5.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-hot-loader": "^1.3.1",
+    "react-motion": "^0.5.0",
+    "style-loader": "^0.17.0",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.5"
   },
   "peerDependencies": {
-    "react": "^15.0.0"
+    "react": "^15.5.4"
   },
   "repository": {
     "type": "git",
@@ -57,7 +59,7 @@
     ]
   },
   "dependencies": {
-    "normalize.css": "^4.2.0",
-    "react-motion": "^0.4.4"
+    "normalize.css": "^7.0.0",
+    "react-motion": "^0.5.0"
   }
 }

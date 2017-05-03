@@ -91,7 +91,7 @@ var HorizontalScroll = function (_Component) {
       e.preventDefault();
       // If scrolling on x axis, change to y axis
       // Otherwise just get the y deltas
-      // Basically, this for Apple mice that allow
+      // Basically, this for Apple mice that allow 
       // horizontal scrolling by default
       var rawData = e.deltaY ? e.deltaY : e.deltaX;
       var mouseY = Math.floor(rawData);
@@ -123,11 +123,11 @@ var HorizontalScroll = function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      var _props = this.props;
-      var config = _props.config;
-      var style = _props.style;
-      var width = style.width;
-      var height = style.height;
+      var _props = this.props,
+          config = _props.config,
+          style = _props.style;
+      var width = style.width,
+          height = style.height;
 
       var springConfig = config ? config : _reactMotion.presets.noWobble;
 
