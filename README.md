@@ -69,7 +69,7 @@ class ScrollingHorizontally extends Component {
 ### Full Width Example
 ```js
 import React, { Component } from 'react'
-import HorizontalScroll from 'react-horizontal-scroll'
+import HorizontalScroll from 'react-scroll-horizontal'
 
 class ScrollingHorizontally extends Component {
   render() {
