@@ -12,6 +12,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
@@ -91,7 +95,7 @@ var HorizontalScroll = function (_Component) {
       e.preventDefault();
       // If scrolling on x axis, change to y axis
       // Otherwise just get the y deltas
-      // Basically, this for Apple mice that allow 
+      // Basically, this for Apple mice that allow
       // horizontal scrolling by default
       var rawData = e.deltaY ? e.deltaY : e.deltaX;
       var mouseY = Math.floor(rawData);
@@ -178,10 +182,10 @@ exports.default = HorizontalScroll;
 
 
 HorizontalScroll.proptypes = {
-  reverseScroll: _react.PropTypes.bool,
-  pageLock: _react.PropTypes.bool,
-  config: _react.PropTypes.object,
-  style: _react.PropTypes.object
+  reverseScroll: _propTypes2.default.bool,
+  pageLock: _propTypes2.default.bool,
+  config: _propTypes2.default.object,
+  style: _propTypes2.default.object
 };
 
 HorizontalScroll.defaultProps = {
