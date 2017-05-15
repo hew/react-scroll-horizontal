@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import DOM from 'react-dom'
 import { Motion, spring, presets } from 'react-motion'
 
 export default class HorizontalScroll extends Component {
   constructor(props) {
     super(props)
-    
+
     this.state = { animValues: 0 }
 
     this.onScrollStart = this.onScrollStart.bind(this)
@@ -19,7 +20,7 @@ export default class HorizontalScroll extends Component {
     if (this.props.pageLock) {
       const orig = document.firstElementChild.className;
       document.firstElementChild.className = orig + (orig ? ' ' : '') + 'locked__';
-    } else return 
+    } else return
   }
 
   componentWillUnmount() {
@@ -52,12 +53,12 @@ export default class HorizontalScroll extends Component {
     }
 
   }
-    
+
   onScrollStart(e) {
     e.preventDefault()
     // If scrolling on x axis, change to y axis
     // Otherwise just get the y deltas
-    // Basically, this for Apple mice that allow 
+    // Basically, this for Apple mice that allow
     // horizontal scrolling by default
     var rawData = e.deltaY ? e.deltaY : e.deltaX
     var mouseY = Math.floor(rawData)
@@ -82,9 +83,9 @@ export default class HorizontalScroll extends Component {
   resetMax(x) { this.setState({ animValues: x }) }
 
   render() {
-      
+
     const { config, style } = this.props
-    const { width, height } = style 
+    const { width, height } = style
     const springConfig = config ? config : presets.noWobble
 
     // Styles
@@ -97,7 +98,7 @@ export default class HorizontalScroll extends Component {
     }
 
     return (
-      <div 
+      <div
         onWheel={this.onScrollStart}
         ref='hScrollParent'
         style={ styles }
@@ -110,7 +111,7 @@ export default class HorizontalScroll extends Component {
                 display: `inline-flex`,
                 height: `100%`,
                 position: `absolute`,
-                willChange:`transform` 
+                willChange:`transform`
               }
               return (
                 <div style={ scrollingElementStyles }>

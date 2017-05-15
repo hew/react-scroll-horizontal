@@ -1,65 +1,65 @@
 {
-  "name": "react-scroll-horizontal",
-  "version": "0.0.6",
-  "description": "Easy Horizontal Scrolling for React",
-  "main": "dist/react-scroll-horizontal.js",
-  "scripts": {
-    "prepublish": "babel src --out-dir dist",
-    "dev": "webpack-dev-server --progress --color --config webpack.dev.config.js",
-    "docs": "NODE_ENV=production webpack -p --progress --color",
-    "start": "npm run dev"
-  },
-  "author": "Matthew Jones",
-  "license": "MIT",
-  "keywords": [
-    "mousewheel",
-    "horizontal-scroll",
-    "scroll-horizontal",
-    "react"
-  ],
-  "devDependencies": {
-    "babel-cli": "*",
-    "babel-core": "^6.24.1",
-    "babel-loader": "^7.0.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-register": "^6.24.1",
-    "css-loader": "^0.28.1",
-    "file-loader": "^0.11.1",
-    "html-loader": "^0.4.5",
-    "json-loader": "^0.5.4",
-    "normalize.css": "^7.0.0",
-    "postcss-loader": "^1.3.3",
-    "raw-loader": "^0.5.1",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-hot-loader": "^1.3.1",
-    "react-motion": "^0.5.0",
-    "style-loader": "^0.17.0",
-    "webpack": "^2.4.1",
-    "webpack-dev-server": "^2.4.5"
-  },
-  "peerDependencies": {
-    "react": "^15.5.4"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hew/react-horizontal-scroll.git"
-  },
-  "bugs": {
-    "url": "https://github.com/hew/react-horizontal-scroll/issues"
-  },
-  "homepage": "https://github.com/hew/react-horizontal-scroll",
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-0",
-      "react"
-    ]
-  },
-  "dependencies": {
-    "normalize.css": "^7.0.0",
-    "react-motion": "^0.5.0"
-  }
+    "name": "react-scroll-horizontal",
+    "version": "1.1.1",
+    "description": "Easy Horizontal Scrolling for React",
+    "main": "dist/react-scroll-horizontal.js",
+    "scripts": {
+        "prepublish": "babel src --out-dir dist",
+        "dev": "webpack-dev-server --progress --color --config webpack.dev.config.js",
+        "docs": "NODE_ENV=production webpack -p --progress --color",
+        "start": "npm run dev"
+    },
+    "author": "Matthew Jones",
+    "license": "MIT",
+    "keywords": [
+        "mousewheel",
+        "horizontal-scroll",
+        "scroll-horizontal",
+        "react"
+    ],
+    "devDependencies": {
+        "babel-cli": "*",
+        "babel-core": "^6.24.1",
+        "babel-loader": "^7.0.0",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-react": "^6.24.1",
+        "babel-preset-stage-0": "^6.24.1",
+        "babel-register": "^6.24.1",
+        "css-loader": "^0.28.1",
+        "file-loader": "^0.11.1",
+        "html-loader": "^0.4.5",
+        "json-loader": "^0.5.4",
+        "normalize.css": "^7.0.0",
+        "postcss-loader": "^1.3.3",
+        "raw-loader": "^0.5.1",
+        "react": "^15.5.4",
+        "react-dom": "^15.5.4",
+        "react-hot-loader": "^1.3.1",
+        "style-loader": "^0.17.0",
+        "webpack": "^2.4.1",
+        "webpack-dev-server": "^2.4.5"
+    },
+    "peerDependencies": {
+        "react": "^15.5.4"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hew/react-horizontal-scroll.git"
+    },
+    "bugs": {
+        "url": "https://github.com/hew/react-horizontal-scroll/issues"
+    },
+    "homepage": "https://github.com/hew/react-horizontal-scroll",
+    "babel": {
+        "presets": [
+            "es2015",
+            "stage-0",
+            "react"
+        ]
+    },
+    "dependencies": {
+        "normalize.css": "^7.0.0",
+        "prop-types": "^15.5.10",
+        "react-motion": "^0.5.0"
+    }
 }
