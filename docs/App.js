@@ -1,5 +1,5 @@
-import React  from 'react'
-import HorizontalScroll  from '../dist/react-scroll-horizontal'
+import React from 'react'
+import HorizontalScroll from '../dist/react-scroll-horizontal'
 import './css/index.css'
 
 export default class App extends React.Component {
