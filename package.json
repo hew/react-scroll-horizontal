@@ -12,9 +12,7 @@
   "author": "Matthew Jones",
   "license": "MIT",
   "dependencies": {
-    "react-motion": "^0.5.0"
-  },
-  "peerDependencies": {
+    "react-motion": "^0.5.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
