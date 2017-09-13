@@ -38,12 +38,15 @@ var HorizontalScroll = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (HorizontalScroll.__proto__ || Object.getPrototypeOf(HorizontalScroll)).call(this, props));
 
+    _this.componentDidUpdate = function () {
+      return _this.calculate();
+    };
+
     _this.state = { animValues: 0 };
 
     _this.onScrollStart = _this.onScrollStart.bind(_this);
     _this.resetMin = _this.resetMin.bind(_this);
     _this.resetMax = _this.resetMax.bind(_this);
-
     return _this;
   }
 
@@ -64,30 +67,6 @@ var HorizontalScroll = function (_Component) {
       } else return;
     }
   }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate(nextProps, nextState) {
-
-      // Calculate the bounds of the scroll area
-      var el = _reactDom2.default.findDOMNode(this.refs['hScrollParent']);
-
-      var max = el.lastElementChild.scrollWidth;
-      var win = el.offsetWidth;
-
-      // Get the new animation values
-      var curr = this.state.animValues;
-
-      // Establish the bounds. We do this every time b/c it might change.
-      var bounds = -(max - win);
-
-      // Logic to hold everything in place
-      if (curr >= 1) {
-        this.resetMin();
-      } else if (curr <= bounds) {
-        var x = bounds + 1;
-        this.resetMax(x);
-      }
-    }
-  }, {
     key: 'onScrollStart',
     value: function onScrollStart(e) {
       var _this2 = this;
@@ -105,12 +84,80 @@ var HorizontalScroll = function (_Component) {
       var newAnimationValue = animationValue + mouseY;
       var newAnimationValueNegative = animationValue - mouseY;
 
+      if (!this.caniscroll()) {
+        return;
+      }
+
       var scrolling = function scrolling() {
         _this2.props.reverseScroll ? _this2.setState({ animValues: newAnimationValueNegative }) : _this2.setState({ animValues: newAnimationValue });
       };
 
       // Begin Scrolling Animation
       requestAnimationFrame(scrolling);
+    }
+  }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps, nextState) {
+      if (true
+      // Ensure componet has been loaded
+      && this.calculate.timer !== void 0 && this.props.children === nextProps.children && this.state.animValues === nextState.animValues) {
+        return false;
+      }
+
+      if (true && this.props.children === nextProps.children && this.caniscroll() === false) {
+        return false;
+      }
+
+      return true;
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.children !== nextProps.children) {
+        // Reset container offset
+        this.resetMin();
+      }
+    }
+  }, {
+    key: 'caniscroll',
+    value: function caniscroll() {
+      var el = _reactDom2.default.findDOMNode(this.refs['hScrollParent']);
+      var rect = el.getBoundingClientRect();
+      var scroller = el.firstElementChild;
+
+      return scroller.offsetLeft < rect.left || scroller.offsetLeft + scroller.offsetWidth > rect.width;
+    }
+  }, {
+    key: 'calculate',
+    value: function calculate() {
+      var _this3 = this;
+
+      // Cancel the previous calculate
+      clearTimeout(this.calculate.timer);
+
+      // Lazy to calculate, prevent max recurse call
+      this.calculate.timer = setTimeout(function () {
+
+        // Calculate the bounds of the scroll area
+        var el = _reactDom2.default.findDOMNode(_this3.refs['hScrollParent']);
+
+        var max = el.lastElementChild.scrollWidth;
+        var win = el.offsetWidth;
+
+        // Get the new animation values
+        var curr = _this3.state.animValues;
+
+        // Establish the bounds. We do this every time b/c it might change.
+        var bounds = -(max - win);
+
+        // Logic to hold everything in place
+        if (curr >= 1) {
+          _this3.resetMin();
+        } else if (curr <= bounds) {
+          var x = bounds + 1;
+          _this3.resetMax(x);
+        }
+      });
     }
   }, {
     key: 'resetMin',
@@ -125,7 +172,7 @@ var HorizontalScroll = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _props = this.props,
           config = _props.config,
@@ -164,10 +211,11 @@ var HorizontalScroll = function (_Component) {
               position: 'absolute',
               willChange: 'transform'
             };
+
             return _react2.default.createElement(
               'div',
               { style: scrollingElementStyles },
-              _this3.props.children
+              _this4.props.children
             );
           }
         )

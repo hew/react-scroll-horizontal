@@ -1,13 +1,31 @@
 import React from 'react'
-import HorizontalScroll from '../dist/react-scroll-horizontal'
+import HorizontalScroll from '../src/react-scroll-horizontal'
 import './css/index.css'
 
 export default class App extends React.Component {
   constructor(props) {
     super(props)
   }
+
+  genData() {
+    var data = []
+    var max = Math.random() * 20 + 1
+
+    for (; --max > 0;) {
+      data.push({
+        text: 'Scroll Me ' + max + '!!'
+      })
+    }
+
+    return data
+  }
+
+  state = {
+    someDivs: this.genData()
+  };
+
   render () {
-    const exampleItems = this.props.someDivs.map((item, i) => {
+    const exampleItems = this.state.someDivs.map((item, i) => {
     return (
       <div key={ i } className='tile'>
         <h2>{ item.text }</h2>
@@ -25,18 +43,18 @@ export default class App extends React.Component {
             take care of the rest.
           </h3>
           <div className="flex justify-center">
-            <iframe src="https://ghbtns.com/github-btn.html?user=hew&repo=react-scroll-horizontal&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+            <iframe src="https://ghbtns.com/github-btn.html?user=hew&repo=react-scroll-horizontal&type=star&count=true" width="170px" height="20px"></iframe>
           </div>
         </div>
         <div className="hr"></div>
-        <h1 className='center'>Full Width</h1>
+        <h1 className='center' onClick={ e => this.setState({ someDivs: this.genData() }) }>Full Width</h1>
         <div style={{ height: `22.7em`}}>
             <HorizontalScroll >
               { exampleItems }
             </HorizontalScroll>
         </div>
         <div className="hr"></div>
-        <h1 className='center'>Arbitrary Width, Spring Config</h1>
+        <h1 className='center' onClick={ e => this.setState({ someDivs: this.genData() }) }>Arbitrary Width, Spring Config</h1>
         <div style={{ height: `22.7em`, width: `66%`}} >
             <HorizontalScroll config={{ stiffness: 160, damping: 110}}>
               { exampleItems }
