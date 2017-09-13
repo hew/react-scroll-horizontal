@@ -12,47 +12,24 @@ export default class HorizontalScroll extends Component {
     this.onScrollStart = this.onScrollStart.bind(this)
     this.resetMin      = this.resetMin.bind(this)
     this.resetMax      = this.resetMax.bind(this)
-
   }
 
   componentDidMount() {
     // Place the 'lock__' class on the HTML element - if toggled
     if (this.props.pageLock) {
-      const orig = document.firstElementChild.className;
-      document.firstElementChild.className = orig + (orig ? ' ' : '') + 'locked__';
+      const orig = document.firstElementChild.className
+      document.firstElementChild.className = orig + (orig ? ' ' : '') + 'locked__'
     } else return
   }
 
   componentWillUnmount() {
     if (this.props.pageLock) {
     document.firstElementChild.className =
-    document.firstElementChild.className.replace(/ ?locked__/, '');
+    document.firstElementChild.className.replace(/ ?locked__/, '')
     } else return
   }
 
-  componentDidUpdate(nextProps, nextState) {
-
-    // Calculate the bounds of the scroll area
-    let el = DOM.findDOMNode(this.refs['hScrollParent'])
-
-    let max = el.lastElementChild.scrollWidth
-    let win = el.offsetWidth
-
-    // Get the new animation values
-    var curr = this.state.animValues
-
-    // Establish the bounds. We do this every time b/c it might change.
-    var bounds = -(max - win)
-
-    // Logic to hold everything in place
-    if (curr >= 1) {
-      this.resetMin()
-    } else if (curr <= bounds) {
-      var x = bounds + 1
-      this.resetMax(x)
-    }
-
-  }
+  componentDidUpdate = () => this.calculate()
 
   onScrollStart(e) {
     e.preventDefault()
@@ -68,6 +45,10 @@ export default class HorizontalScroll extends Component {
     var newAnimationValue         = (animationValue + mouseY)
     var newAnimationValueNegative = (animationValue - mouseY)
 
+    if (!this.caniscroll()) {
+      return
+    }
+
     var scrolling = () => {
       this.props.reverseScroll
         ?  this.setState({ animValues: newAnimationValueNegative })
@@ -76,6 +57,55 @@ export default class HorizontalScroll extends Component {
 
     // Begin Scrolling Animation
     requestAnimationFrame(scrolling)
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (true
+      // Ensure componet has been loaded
+      && this.calculate.timer !== void 0
+      && this.props.children === nextProps.children
+      && this.state.animValues === nextState.animValues) {
+      return false
+    }
+
+    return true
+  }
+
+  caniscroll() {
+    let el = DOM.findDOMNode(this.refs['hScrollParent'])
+    let rect = el.getBoundingClientRect()
+
+    return el.firstElementChild.offsetLeft < rect.left 
+      || (el.lastElementChild.offsetLeft + el.lastElementChild.offsetWidth > rect.width)
+  }
+
+  calculate() {
+    // Cancel the previous calculate
+    clearTimeout(this.calculate.timer)
+
+    // Lazy to calculate, prevent max recurse call
+    this.calculate.timer = setTimeout(() => {
+
+      // Calculate the bounds of the scroll area
+      let el = DOM.findDOMNode(this.refs['hScrollParent'])
+
+      let max = el.lastElementChild.scrollWidth
+      let win = el.offsetWidth
+
+      // Get the new animation values
+      var curr = this.state.animValues
+
+      // Establish the bounds. We do this every time b/c it might change.
+      var bounds = -(max - win)
+
+      // Logic to hold everything in place
+      if (curr >= 1) {
+        this.resetMin()
+      } else if (curr <= bounds) {
+        var x = bounds + 1
+        this.resetMax(x)
+      }
+    })
   }
 
   resetMin() { this.setState({ animValues: 0 }) }
