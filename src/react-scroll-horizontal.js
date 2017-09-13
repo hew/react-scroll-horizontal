@@ -67,6 +67,12 @@ export default class HorizontalScroll extends Component {
       && this.state.animValues === nextState.animValues) {
       return false
     }
+    
+    if (true 
+      && this.props.children === nextProps.children
+      && this.caniscroll() === false) {
+      return false
+    }
 
     return true
   }
@@ -74,8 +80,7 @@ export default class HorizontalScroll extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.children !== nextProps.children) {
       // Reset container offset
-      this.resetMin();
-      this.resetMax(0);
+      this.resetMin()
     }
   }
 
@@ -152,6 +157,7 @@ export default class HorizontalScroll extends Component {
                 position: `absolute`,
                 willChange:`transform`
               }
+
               return (
                 <div style={ scrollingElementStyles }>
                   { this.props.children }
