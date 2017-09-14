@@ -1,6 +1,6 @@
 {
   "name": "react-scroll-horizontal",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Easy Horizontal Scrolling for React",
   "main": "dist/react-scroll-horizontal.js",
   "scripts": {
@@ -12,9 +12,9 @@
   "author": "Matthew Jones",
   "license": "MIT",
   "dependencies": {
-    "react-motion": "^0.5.0",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-motion": "^0.5.0"
   },
   "devDependencies": {
     "babel-cli": "*",
@@ -29,8 +29,8 @@
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
     "normalize.css": "^7.0.0",
-    "postcss-import": "^10.0.0",
     "postcss-cssnext": "^2.10.0",
+    "postcss-import": "^10.0.0",
     "postcss-loader": "^1.3.3",
     "raw-loader": "^0.5.1",
     "react-hot-loader": "^1.3.1",
