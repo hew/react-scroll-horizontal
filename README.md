@@ -6,6 +6,8 @@
 
 [http://hew.github.io/react-scroll-horizontal](http://hew.github.io/react-scroll-horizontal)
 
+[ieaseMusic](https://github.com/trazyn/ieaseMusic)
+
 ## How it Works
 
 Feed `<HorizontalScroll>` one child, or many children.
