@@ -50,7 +50,7 @@ Gotchas
 ### Arbitrary Parent/Child Widths Example
 ```jsx
 import React, { Component } from 'react'
-import HorizontalScroll from 'react-horizontal-scroll'
+import HorizontalScroll from 'react-scroll-horizontal'
 
 class ScrollingHorizontally extends Component {
   render() {
