@@ -45,6 +45,7 @@ Gotchas
 
 * Uses Flexbox
 * Child item(s) must be px/em/vw - no percentages (yet)
+* Flexbox weirdness in IE
 
 
 ### Arbitrary Parent/Child Widths Example
