@@ -146,7 +146,7 @@ export default class HorizontalScroll extends Component {
         onWheel={this.onScrollStart}
         ref='hScrollParent'
         style={ styles }
-        className='scroll-horizontal'
+        className={`scroll-horizontal ${this.props.className || ''}`}
       >
         <Motion style={ { z: spring(this.state.animValues, springConfig) } }>
           { ({z}) => {
@@ -174,12 +174,14 @@ HorizontalScroll.proptypes = {
   reverseScroll: PropTypes.bool,
   pageLock: PropTypes.bool,
   config: PropTypes.object,
-  style: PropTypes.object
+  style: PropTypes.object,
+  className: PropTypes.string,
 }
 
 HorizontalScroll.defaultProps = {
   reverseScroll: false,
   pageLock: false,
   config: null,
-  style: { width: `100%`, height: `100%` }
+  style: { width: `100%`, height: `100%` },
+  className: null,
 }
