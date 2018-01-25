@@ -27,6 +27,7 @@ npm i react-scroll-horizontal
     reverseScroll = { bool }
     style         = { object }
     config        = {{ stiffness: int, damping: int }}
+    className     = { string }
     >
      { children }
   </HorizontalScroll>
@@ -39,6 +40,7 @@ Props
 * `reverseScroll`  - Reverses the scroll direction
 * `style`          - Pass a style object through to parent div
 * `config`         - Passes a spring config object to React Motion
+* `className`      - Classnames to pass into the component
 
 
 Gotchas

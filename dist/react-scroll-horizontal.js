@@ -196,7 +196,7 @@ var HorizontalScroll = function (_Component) {
           onWheel: this.onScrollStart,
           ref: 'hScrollParent',
           style: styles,
-          className: 'scroll-horizontal'
+          className: 'scroll-horizontal ' + (this.props.className || '')
         },
         _react2.default.createElement(
           _reactMotion.Motion,
@@ -233,12 +233,14 @@ HorizontalScroll.proptypes = {
   reverseScroll: _propTypes2.default.bool,
   pageLock: _propTypes2.default.bool,
   config: _propTypes2.default.object,
-  style: _propTypes2.default.object
+  style: _propTypes2.default.object,
+  className: _propTypes2.default.string
 };
 
 HorizontalScroll.defaultProps = {
   reverseScroll: false,
   pageLock: false,
   config: null,
-  style: { width: '100%', height: '100%' }
+  style: { width: '100%', height: '100%' },
+  className: null
 };
