@@ -6,13 +6,13 @@
 
 [http://hew.github.io/react-scroll-horizontal](http://hew.github.io/react-scroll-horizontal)
 
-[ieaseMusic](https://github.com/trazyn/ieaseMusic)
-
 ## How it Works
 
 Feed `<HorizontalScroll>` one child, or many children.
 So long as they have a static width, this component will
-take care of the rest.
+take care of the rest. **Note: the width of the children must
+be greater than the width of the `<HorizontalScroll>`**
+
 ___
 
 ## Usage
@@ -27,6 +27,7 @@ npm i react-scroll-horizontal
     reverseScroll = { bool }
     style         = { object }
     config        = {{ stiffness: int, damping: int }}
+    className     = { string }
     >
      { children }
   </HorizontalScroll>
@@ -39,11 +40,11 @@ Props
 * `reverseScroll`  - Reverses the scroll direction
 * `style`          - Pass a style object through to parent div
 * `config`         - Passes a spring config object to React Motion
+* `className`      - Classnames to pass into the component
 
 
 Gotchas
 
-* Uses Flexbox
 * Child item(s) must be px/em/vw - no percentages (yet)
 * Flexbox weirdness in IE
 
@@ -89,6 +90,9 @@ class ScrollingHorizontally extends Component {
 }
 ```
 
+## Sites/Apps using React Scroll Horizontal
+
+[ieaseMusic](https://github.com/trazyn/ieaseMusic)
 
 ## Contributing
 
