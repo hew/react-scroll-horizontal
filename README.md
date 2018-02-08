@@ -1,6 +1,6 @@
 # React Scroll Horizontal
 
-[WIP] A React component for scrolling horizontally with the mouse wheel.
+A React component for scrolling horizontally with the mouse wheel.
 
 ## Demo 
 
