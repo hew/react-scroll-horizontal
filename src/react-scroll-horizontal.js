@@ -67,8 +67,8 @@ export default class HorizontalScroll extends Component {
       && this.state.animValues === nextState.animValues) {
       return false
     }
-    
-    if (true 
+
+    if (true
       && this.props.children === nextProps.children
       && this.caniscroll() === false) {
       return false
@@ -77,19 +77,12 @@ export default class HorizontalScroll extends Component {
     return true
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.children !== nextProps.children) {
-      // Reset container offset
-      this.resetMin()
-    }
-  }
-
   caniscroll() {
     let el = DOM.findDOMNode(this.hScrollParent)
     let rect = el.getBoundingClientRect()
     let scroller = el.firstElementChild
 
-    return scroller.offsetLeft < rect.left 
+    return scroller.offsetLeft < rect.left
       || (scroller.offsetLeft + scroller.offsetWidth > rect.width)
   }
 
