@@ -111,14 +111,6 @@ var HorizontalScroll = function (_Component) {
       return true;
     }
   }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (this.props.children !== nextProps.children) {
-        // Reset container offset
-        this.resetMin();
-      }
-    }
-  }, {
     key: 'caniscroll',
     value: function caniscroll() {
       var el = _reactDom2.default.findDOMNode(this.hScrollParent);
@@ -217,7 +209,7 @@ var HorizontalScroll = function (_Component) {
             return _react2.default.createElement(
               'div',
               { style: scrollingElementStyles },
-              _this4.props.children
+              _this4.props.children(z)
             );
           }
         )
@@ -236,7 +228,8 @@ HorizontalScroll.proptypes = {
   pageLock: _propTypes2.default.bool,
   config: _propTypes2.default.object,
   style: _propTypes2.default.object,
-  className: _propTypes2.default.string
+  className: _propTypes2.default.string,
+  children: _propTypes2.default.func.isRequired
 };
 
 HorizontalScroll.defaultProps = {
