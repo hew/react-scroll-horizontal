@@ -153,7 +153,7 @@ export default class HorizontalScroll extends Component {
 
               return (
                 <div style={ scrollingElementStyles }>
-                  { this.props.children }
+                  { this.props.children(z) }
                 </div>
               )
             } }
@@ -169,6 +169,7 @@ HorizontalScroll.proptypes = {
   config: PropTypes.object,
   style: PropTypes.object,
   className: PropTypes.string,
+  children: PropTypes.func.isRequired,
 }
 
 HorizontalScroll.defaultProps = {
