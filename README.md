@@ -1,10 +1,14 @@
 # React Scroll Horizontal
 
-A React component for scrolling horizontally with the mouse wheel.
+> Scroll horizontally with the mousewheel!
 
-## Demo 
+[![NPM](https://img.shields.io/npm/v/react-scroll-horizontal.svg)](https://www.npmjs.com/package/react-scroll-horizontal)
 
-[http://hew.github.io/react-scroll-horizontal](http://hew.github.io/react-scroll-horizontal)
+[demo](http://hew.github.io/react-scroll-horizontal)
+
+```bash
+npm install --save react-scroll-horizontal
+```
 
 ## How it Works
 
@@ -92,7 +96,7 @@ class ScrollingHorizontally extends Component {
 
 ## Roadmap
 
-* Normalize mouse delta values (see: [#1](https://github.com/hew/react-scroll-horizontal/issues/1)
+* Normalize mouse delta values (see: [#1](https://github.com/hew/react-scroll-horizontal/issues/1))
 * Implement tests ✨
 * Perf optimizations
 * Ability to swap out animation engines (maybe)
