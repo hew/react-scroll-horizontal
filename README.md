@@ -90,14 +90,21 @@ class ScrollingHorizontally extends Component {
 }
 ```
 
+## Roadmap
+
+* Normalize mouse delta values (see: [#1](https://github.com/hew/react-scroll-horizontal/issues/1)
+* Implement tests ✨
+* Perf optimizations
+* Ability to swap out animation engines (maybe)
+
+
+## Contributing
+
+Want to help out? Great! In fact, a good first contribution would be to set up that [all contributors](https://github.com/kentcdodds/all-contributors) thing. Ohhh. Meta.
+
 ## Sites/Apps using React Scroll Horizontal
 
 [ieaseMusic](https://github.com/trazyn/ieaseMusic)
 
-## Contributing
-
-Want to help out? Great! 
-
-
 ---
-MIT License
+MIT © [hew](https://github.com/hew)
