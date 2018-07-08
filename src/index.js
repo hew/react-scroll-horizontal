@@ -3,15 +3,15 @@ import PropTypes from 'prop-types'
 import DOM from 'react-dom'
 import { Motion, spring, presets } from 'react-motion'
 
-export default class HorizontalScroll extends Component {
+export default class ScrollHorizontal extends Component {
   constructor(props) {
     super(props)
 
     this.state = { animValues: 0 }
 
     this.onScrollStart = this.onScrollStart.bind(this)
-    this.resetMin      = this.resetMin.bind(this)
-    this.resetMax      = this.resetMax.bind(this)
+    this.resetMin = this.resetMin.bind(this)
+    this.resetMax = this.resetMax.bind(this)
   }
 
   componentDidMount() {
@@ -19,31 +19,31 @@ export default class HorizontalScroll extends Component {
     if (this.props.pageLock) {
       const orig = document.firstElementChild.className
       document.firstElementChild.className = orig + (orig ? ' ' : '') + 'locked__'
-    } else return
+    }
   }
 
   componentWillUnmount() {
     if (this.props.pageLock) {
-    document.firstElementChild.className =
-    document.firstElementChild.className.replace(/ ?locked__/, '')
-    } else return
+      document.firstElementChild.className = document.firstElementChild.className.replace(
+        / ?locked__/,
+        ''
+      )
+    }
   }
 
   componentDidUpdate = () => this.calculate()
 
   onScrollStart(e) {
     e.preventDefault()
-    // If scrolling on x axis, change to y axis
-    // Otherwise just get the y deltas
-    // Basically, this for Apple mice that allow
-    // horizontal scrolling by default
+    // If scrolling on x axis, change to y axis. Otherwise, just get the y deltas.
+    // (Basically, this for Apple mice that allow horizontal scrolling by default)
     var rawData = e.deltaY ? e.deltaY : e.deltaX
     var mouseY = Math.floor(rawData)
 
     // Bring in the existing animation values
-    var animationValue            = this.state.animValues
-    var newAnimationValue         = (animationValue + mouseY)
-    var newAnimationValueNegative = (animationValue - mouseY)
+    var animationValue = this.state.animValues
+    var newAnimationValue = animationValue + mouseY
+    var newAnimationValueNegative = animationValue - mouseY
 
     if (!this.caniscroll()) {
       return
@@ -51,26 +51,26 @@ export default class HorizontalScroll extends Component {
 
     var scrolling = () => {
       this.props.reverseScroll
-        ?  this.setState({ animValues: newAnimationValueNegative })
-        :  this.setState({ animValues: newAnimationValue })
+        ? this.setState({ animValues: newAnimationValueNegative })
+        : this.setState({ animValues: newAnimationValue })
     }
 
     // Begin Scrolling Animation
-    requestAnimationFrame(scrolling)
+    window.requestAnimationFrame(scrolling)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (true
-      // Ensure componet has been loaded
-      && this.calculate.timer !== void 0
-      && this.props.children === nextProps.children
-      && this.state.animValues === nextState.animValues) {
+    if (
+      true &&
+      // Ensure component has been loaded
+      this.calculate.timer !== void 0 &&
+      this.props.children === nextProps.children &&
+      this.state.animValues === nextState.animValues
+    ) {
       return false
     }
 
-    if (true
-      && this.props.children === nextProps.children
-      && this.caniscroll() === false) {
+    if (true && this.props.children === nextProps.children && this.caniscroll() === false) {
       return false
     }
 
@@ -82,8 +82,9 @@ export default class HorizontalScroll extends Component {
     let rect = el.getBoundingClientRect()
     let scroller = el.firstElementChild
 
-    return scroller.offsetLeft < rect.left
-      || (scroller.offsetLeft + scroller.offsetWidth > rect.width)
+    return (
+      scroller.offsetLeft < rect.left || scroller.offsetLeft + scroller.offsetWidth > rect.width
+    )
   }
 
   calculate() {
@@ -92,7 +93,6 @@ export default class HorizontalScroll extends Component {
 
     // Lazy to calculate, prevent max recurse call
     this.calculate.timer = setTimeout(() => {
-
       // Calculate the bounds of the scroll area
       let el = DOM.findDOMNode(this.hScrollParent)
 
@@ -115,67 +115,68 @@ export default class HorizontalScroll extends Component {
     })
   }
 
-  resetMin() { this.setState({ animValues: 0 }) }
+  resetMin() {
+    this.setState({ animValues: 0 })
+  }
 
-  resetMax(x) { this.setState({ animValues: x }) }
+  resetMax(x) {
+    this.setState({ animValues: x })
+  }
 
   render() {
-
-    const { config, style } = this.props
+    const { config, style, children } = this.props
     const { width, height } = style
-    const springConfig = config ? config : presets.noWobble
+    const springConfig = config || presets.noWobble
 
     // Styles
     const styles = {
-      height: height ? height : `100%`,
-      width: width ? width : `100%`,
+      height: height || `100%`,
+      width: width || `100%`,
       overflow: `hidden`,
       position: `relative`,
-      ...styles
+      ...style
     }
 
     return (
       <div
-        onWheel={ this.onScrollStart }
-        ref={ r => { this.hScrollParent = r }}
-        style={ styles }
+        onWheel={this.onScrollStart}
+        ref={r => {
+          this.hScrollParent = r
+        }}
+        style={styles}
         className={`scroll-horizontal ${this.props.className || ''}`}
       >
-        <Motion style={ { z: spring(this.state.animValues, springConfig) } }>
-          { ({z}) => {
-              const scrollingElementStyles = {
-                transform: `translate3d(${z}px, 0,0)`,
-                display: `inline-flex`,
-                height: `100%`,
-                position: `absolute`,
-                willChange:`transform`
-              }
+        <Motion style={{ z: spring(this.state.animValues, springConfig) }}>
+          {({ z }) => {
+            const scrollingElementStyles = {
+              transform: `translate3d(${z}px, 0,0)`,
+              display: `inline-flex`,
+              height: `100%`,
+              position: `absolute`,
+              willChange: `transform`
+            }
 
-              return (
-                <div style={ scrollingElementStyles }>
-                  { this.props.children(z) }
-                </div>
-              )
-            } }
+            return <div style={scrollingElementStyles}>{children}</div>
+          }}
         </Motion>
       </div>
     )
   }
 }
 
-HorizontalScroll.proptypes = {
+ScrollHorizontal.propTypes = {
   reverseScroll: PropTypes.bool,
   pageLock: PropTypes.bool,
   config: PropTypes.object,
   style: PropTypes.object,
   className: PropTypes.string,
-  children: PropTypes.func.isRequired,
+  children: PropTypes.array.isRequired
 }
 
-HorizontalScroll.defaultProps = {
+ScrollHorizontal.defaultProps = {
   reverseScroll: false,
   pageLock: false,
   config: null,
   style: { width: `100%`, height: `100%` },
-  className: null,
+  className: null
 }

@@ -1,66 +1,59 @@
 {
   "name": "react-scroll-horizontal",
   "version": "1.4.0",
-  "description": "Easy Horizontal Scrolling for React",
-  "main": "dist/react-scroll-horizontal.js",
-  "scripts": {
-    "prepare": "babel src --out-dir dist",
-    "dev": "webpack-dev-server --progress --color --config webpack.dev.config.js",
-    "docs": "NODE_ENV=production webpack -p --progress --color",
-    "start": "npm run dev"
-  },
-  "author": "Matthew Jones",
+  "description": "Scroll horizontally with the mousewheel!",
+  "author": "hew",
   "license": "MIT",
-  "peerDependencies": {
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+  "repository": "hew/react-scroll-horizontal",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "jsnext:main": "dist/index.es.js",
+  "scripts": {
+    "test": "cross-env CI=1 react-scripts test --env=jsdom",
+    "test:watch": "react-scripts test --env=jsdom",
+    "build": "rollup -c",
+    "start": "rollup -c -w",
+    "prepare": "yarn run build",
+    "predeploy": "cd example && yarn install && yarn run build",
+    "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
     "react-motion": "^0.5.2"
   },
+  "peerDependencies": {
+    "prop-types": "^15.5.4",
+    "react": "^15.0.0 || ^16.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0"
+  },
   "devDependencies": {
-    "babel-cli": "*",
-    "babel-core": "^6.24.1",
-    "babel-loader": "^7.0.0",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.1",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "babel-register": "^6.24.1",
-    "babili-webpack-plugin": "0.0.11",
-    "css-loader": "^0.28.1",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "file-loader": "^0.11.1",
-    "normalize.css": "^7.0.0",
-    "postcss-cssnext": "^2.10.0",
-    "postcss-import": "^10.0.0",
-    "postcss-loader": "^1.3.3",
-    "raw-loader": "^0.5.1",
-    "react-hot-loader": "^1.3.1",
-    "style-loader": "^0.17.0",
-    "webpack": "2.2.0",
-    "webpack-dev-server": "2.4.5"
+    "cross-env": "^5.1.4",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-config-standard-react": "^6.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "gh-pages": "^1.1.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "^1.1.1",
+    "rollup": "^0.54.0",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-commonjs": "^8.2.1",
+    "rollup-plugin-node-resolve": "^3.0.2",
+    "rollup-plugin-peer-deps-external": "^2.0.0",
+    "rollup-plugin-postcss": "^1.1.0",
+    "rollup-plugin-url": "^1.3.0"
   },
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-0",
-      "react"
-    ]
-  },
-  "keywords": [
-    "mousewheel",
-    "horizontal-scroll",
-    "scroll-horizontal",
-    "react"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hew/react-horizontal-scroll.git"
-  },
-  "bugs": {
-    "url": "https://github.com/hew/react-horizontal-scroll/issues"
-  },
-  "homepage": "https://github.com/hew/react-horizontal-scroll"
+  "files": [
+    "dist"
+  ]
 }
