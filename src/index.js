@@ -180,7 +180,8 @@ ScrollHorizontal.propTypes = {
   config: PropTypes.object,
   style: PropTypes.object,
   className: PropTypes.string,
-  children: PropTypes.array.isRequired
+  children: PropTypes.array.isRequired,
+  animValues: PropTypes.number
 }
 
 ScrollHorizontal.defaultProps = {
@@ -188,5 +189,6 @@ ScrollHorizontal.defaultProps = {
   pageLock: false,
   config: null,
   style: { width: `100%`, height: `100%` },
-  className: null
+  className: null,
+  animValues: null
 }
