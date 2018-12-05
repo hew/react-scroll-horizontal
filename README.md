@@ -32,6 +32,7 @@ npm i react-scroll-horizontal
     style         = { object }
     config        = {{ stiffness: int, damping: int }}
     className     = { string }
+    animValues    = { int }
     >
      { children }
   </HorizontalScroll>
