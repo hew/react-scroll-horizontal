@@ -31,7 +31,16 @@ export default class ScrollHorizontal extends Component {
     }
   }
 
-  componentDidUpdate = () => this.calculate()
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.animValues !== this.props.animValues) {
+      let currentAnimValues = this.state.animValues
+      this.setState({
+        animValues: currentAnimValues + this.props.animValues
+      }, this.calculate())
+    } else {
+      this.calculate()
+    }
+  }
 
   onScrollStart(e) {
     e.preventDefault()
@@ -65,7 +74,8 @@ export default class ScrollHorizontal extends Component {
       // Ensure component has been loaded
       this.calculate.timer !== void 0 &&
       this.props.children === nextProps.children &&
-      this.state.animValues === nextState.animValues
+      this.state.animValues === nextState.animValues &&
+      this.props.animValues === nextProps.animValues
     ) {
       return false
     }
@@ -170,7 +180,8 @@ ScrollHorizontal.propTypes = {
   config: PropTypes.object,
   style: PropTypes.object,
   className: PropTypes.string,
-  children: PropTypes.array.isRequired
+  children: PropTypes.array.isRequired,
+  animValues: PropTypes.number
 }
 
 ScrollHorizontal.defaultProps = {
@@ -178,5 +189,6 @@ ScrollHorizontal.defaultProps = {
   pageLock: false,
   config: null,
   style: { width: `100%`, height: `100%` },
-  className: null
+  className: null,
+  animValues: null
 }

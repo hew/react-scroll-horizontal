@@ -45,7 +45,7 @@ Props
 * `style`          - Pass a style object through to parent div
 * `config`         - Passes a spring config object to React Motion
 * `className`      - Classnames to pass into the component
-
+* `animValues`     - Emulate scroll by passing a delta value
 
 Gotchas
 
