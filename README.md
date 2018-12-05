@@ -104,7 +104,7 @@ class ScrollingHorizontally extends Component {
 
 ## Contributing
 
-Want to help out? Great! In fact, a good first contribution would be to set up that [all contributors](https://github.com/kentcdodds/all-contributors) thing. Ohhh. Meta.
+Want to help out? Great!
 
 ## Sites/Apps using React Scroll Horizontal
 
