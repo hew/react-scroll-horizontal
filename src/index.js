@@ -57,16 +57,10 @@ export default class ScrollHorizontal extends Component {
       return
     }
 
-    var newAnimationValueFinal = this.props.reverseScroll
-      ? newAnimationValueNegative
-      : newAnimationValue
-
     var scrolling = () => {
-      this.setState({ animValues: newAnimationValueFinal })
-    }
-
-    if (this.props.onScroll) {
-      this.props.onScroll(newAnimationValueFinal)
+      this.props.reverseScroll
+        ? this.setState({ animValues: newAnimationValueNegative })
+        : this.setState({ animValues: newAnimationValue })
     }
 
     // Begin Scrolling Animation
@@ -116,6 +110,10 @@ export default class ScrollHorizontal extends Component {
 
       // Get the new animation values
       var curr = this.state.animValues
+
+      if (this.props.onScroll) {
+        this.props.onScroll(curr)
+      }
       // Establish the bounds. We do this every time b/c it might change.
       var bounds = -(max - win)
 
