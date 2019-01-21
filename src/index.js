@@ -32,10 +32,9 @@ export default class ScrollHorizontal extends Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    if (prevProps.animValues !== this.props.animValues) {
-      let currentAnimValues = this.state.animValues
+    if (this.props.animValues !== null && prevProps.animValues !== this.props.animValues) {
       this.setState({
-        animValues: currentAnimValues + this.props.animValues
+        animValues: this.props.animValues
       }, this.calculate())
     } else {
       this.calculate()
@@ -112,14 +111,17 @@ export default class ScrollHorizontal extends Component {
       // Get the new animation values
       var curr = this.state.animValues
 
+      if (this.props.onScroll) {
+        this.props.onScroll(curr)
+      }
       // Establish the bounds. We do this every time b/c it might change.
       var bounds = -(max - win)
 
       // Logic to hold everything in place
-      if (curr >= 1) {
+      if (curr >= 0) {
         this.resetMin()
       } else if (curr <= bounds) {
-        var x = bounds + 1
+        var x = bounds
         this.resetMax(x)
       }
     })
@@ -127,10 +129,18 @@ export default class ScrollHorizontal extends Component {
 
   resetMin() {
     this.setState({ animValues: 0 })
+
+    if (this.props.onReachStart) {
+      this.props.onReachStart()
+    }
   }
 
   resetMax(x) {
-    this.setState({ animValues: x })
+    this.setState({animValues: x})
+
+    if (this.props.onReachEnd) {
+      this.props.onReachEnd()
+    }
   }
 
   render() {
@@ -181,7 +191,10 @@ ScrollHorizontal.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
   children: PropTypes.array.isRequired,
-  animValues: PropTypes.number
+  animValues: PropTypes.number,
+  onScroll: PropTypes.func,
+  onReachStart: PropTypes.func,
+  onReachEnd: PropTypes.func
 }
 
 ScrollHorizontal.defaultProps = {

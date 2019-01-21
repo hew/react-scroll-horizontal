@@ -33,6 +33,9 @@ npm i react-scroll-horizontal
     config        = {{ stiffness: int, damping: int }}
     className     = { string }
     animValues    = { int }
+    onScroll      = { func(int) }
+    onReachStart  = { func }
+    onReachEnd    = { func }
     >
      { children }
   </HorizontalScroll>
@@ -47,6 +50,9 @@ Props
 * `config`         - Passes a spring config object to React Motion
 * `className`      - Classnames to pass into the component
 * `animValues`     - Emulate scroll by passing a delta value
+* `onScroll`       - Callback for scroll event
+* `onReachStart`   - Function to be called when scroll reaches start
+* `onReachEnd`     - Function to be called when scroll reaches end
 
 Gotchas
 
