@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import DOM from 'react-dom'
 import { Motion, spring, presets } from 'react-motion'
+import throttle from 'lodash.throttle'
 
 export default class ScrollHorizontal extends Component {
   constructor(props) {
@@ -12,6 +13,9 @@ export default class ScrollHorizontal extends Component {
     this.onScrollStart = this.onScrollStart.bind(this)
     this.resetMin = this.resetMin.bind(this)
     this.resetMax = this.resetMax.bind(this)
+
+    if (props.onReachStart) this.onReachStart = throttle(props.onReachStart, 800, { trailing: false })
+    if (props.onReachEnd) this.onReachEnd = throttle(props.onReachEnd, 800, { trailing: false })
   }
 
   componentDidMount() {
@@ -32,9 +36,16 @@ export default class ScrollHorizontal extends Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    if (this.props.animValues !== null && prevProps.animValues !== this.props.animValues) {
+    if (prevProps.animValues !== this.props.animValues) {
+      // Emulate scroll by passing a relative delta value
+      let currentAnimValues = this.state.animValues
       this.setState({
-        animValues: this.props.animValues
+        animValues: currentAnimValues + this.props.animValues
+      }, this.calculate())
+    } else if (this.props.scrollToValue !== null && prevProps.scrollToValue !== this.props.scrollToValue) {
+      // Emulate scroll to exact position by passing an absolute value
+      this.setState({
+        animValues: this.props.scrollToValue
       }, this.calculate())
     } else {
       this.calculate()
@@ -74,7 +85,8 @@ export default class ScrollHorizontal extends Component {
       this.calculate.timer !== void 0 &&
       this.props.children === nextProps.children &&
       this.state.animValues === nextState.animValues &&
-      this.props.animValues === nextProps.animValues
+      this.props.animValues === nextProps.animValues &&
+      this.props.scrollToValue === nextProps.scrollToValue
     ) {
       return false
     }
@@ -131,7 +143,7 @@ export default class ScrollHorizontal extends Component {
     this.setState({ animValues: 0 })
 
     if (this.props.onReachStart) {
-      this.props.onReachStart()
+      this.onReachStart()
     }
   }
 
@@ -139,7 +151,7 @@ export default class ScrollHorizontal extends Component {
     this.setState({animValues: x})
 
     if (this.props.onReachEnd) {
-      this.props.onReachEnd()
+      this.onReachEnd()
     }
   }
 
@@ -192,6 +204,7 @@ ScrollHorizontal.propTypes = {
   className: PropTypes.string,
   children: PropTypes.array.isRequired,
   animValues: PropTypes.number,
+  scrollToValue: PropTypes.number,
   onScroll: PropTypes.func,
   onReachStart: PropTypes.func,
   onReachEnd: PropTypes.func
@@ -203,5 +216,9 @@ ScrollHorizontal.defaultProps = {
   config: null,
   style: { width: `100%`, height: `100%` },
   className: null,
-  animValues: null
+  animValues: null,
+  scrollToValue: null,
+  onScroll: null,
+  onReachStart: null,
+  onReachEnd: null
 }
