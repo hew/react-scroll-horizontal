@@ -4,7 +4,7 @@
 
 [![NPM](https://img.shields.io/npm/v/react-scroll-horizontal.svg)](https://www.npmjs.com/package/react-scroll-horizontal)
 
-[demo](http://hew.github.io/react-scroll-horizontal)
+[demo](http://hew.github.io/react-scroll-horizontal) (✅ Best viewed in Safari. 🚫Latest Chrome scroll behaviour looks to have broken demo)
 
 ```bash
 npm install --save react-scroll-horizontal
