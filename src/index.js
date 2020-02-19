@@ -149,7 +149,7 @@ export default class ScrollHorizontal extends Component {
 
     return (
       <div
-        onWheel={this.onScrollStart}
+        onWheel={!this.props.disabled && this.onScrollStart}
         ref={r => {
           this.hScrollParent = r
         }}
@@ -181,7 +181,8 @@ ScrollHorizontal.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
   children: PropTypes.array.isRequired,
-  animValues: PropTypes.number
+  animValues: PropTypes.number,
+  disabled: PropTypes.bool
 }
 
 ScrollHorizontal.defaultProps = {
@@ -190,5 +191,6 @@ ScrollHorizontal.defaultProps = {
   config: null,
   style: { width: `100%`, height: `100%` },
   className: null,
-  animValues: null
+  animValues: null,
+  disabled: false
 }
