@@ -6,9 +6,6 @@
 
 [demo](http://hew.github.io/react-scroll-horizontal) 
 
-✅ Best viewed in Safari. 
-
-🚫Latest Chrome scroll behaviour looks to have broken demo.
 
 ```bash
 npm install --save react-scroll-horizontal
