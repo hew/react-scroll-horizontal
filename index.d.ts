@@ -12,7 +12,7 @@ interface HorizontalScrollProps {
     config?: HorizontalScrollConfig;
     className?: string;
     animValues?: number;
-    children: ReactNode| ReactNode[];
+    children: ReactNode | ReactNode[];
 }
 
 declare class HorizontalScroll extends Component<HorizontalScrollProps> {
