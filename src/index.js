@@ -110,8 +110,8 @@ export default class ScrollHorizontal extends Component {
       // Calculate the bounds of the scroll area
       let el = DOM.findDOMNode(this.hScrollParent)
 
-      let max = el.lastElementChild.scrollWidth
-      let win = el.offsetWidth
+      let max = (el && el.lastElementChild && el.lastElementChild.scrollWidth) || 0
+      let win = (el && el.offsetWidth) || 0
 
       // Get the new animation values
       var curr = this.state.animValues
