@@ -109,6 +109,7 @@ export default class ScrollHorizontal extends Component {
     this.calculate.timer = setTimeout(() => {
       // Calculate the bounds of the scroll area
       let el = DOM.findDOMNode(this.hScrollParent)
+      let rect = el.getBoundingClientRect()
 
       let max = el.lastElementChild.scrollWidth
       let win = el.offsetWidth
@@ -123,8 +124,12 @@ export default class ScrollHorizontal extends Component {
       if (curr >= 1) {
         this.resetMin()
       } else if (curr <= bounds) {
-        var x = bounds + 1
-        this.resetMax(x)
+        if (max > rect.width) {
+          var x = bounds + 1
+          this.resetMax(x)
+        } else {
+          this.resetMax(0)
+        }
       }
     })
   }
