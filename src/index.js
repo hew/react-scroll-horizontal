@@ -163,7 +163,6 @@ export default class ScrollHorizontal extends Component {
         }}
         style={styles}
         className={`scroll-horizontal ${this.props.className || ''}`}
-        id='horizontal-scroll'
       >
         <Motion style={{ z: spring(this.state.animValues, springConfig) }}>
           {({ z }) => {
@@ -175,7 +174,7 @@ export default class ScrollHorizontal extends Component {
               willChange: `transform`
             }
 
-            return <div style={scrollingElementStyles}>{children}</div>
+            return <div style={scrollingElementStyles} id='horizontal-scroll'>{children}</div>
           }}
         </Motion>
       </div>
