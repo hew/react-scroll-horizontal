@@ -163,6 +163,7 @@ export default class ScrollHorizontal extends Component {
         }}
         style={styles}
         className={`scroll-horizontal ${this.props.className || ''}`}
+        id='horizontal-scroll'
       >
         <Motion style={{ z: spring(this.state.animValues, springConfig) }}>
           {({ z }) => {
