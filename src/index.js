@@ -97,8 +97,8 @@ export default class ScrollHorizontal extends Component {
     let scroller
 
     if (el) {
-      rect = el?.getBoundingClientRect()
-      scroller = el?.firstElementChild
+      rect = el.getBoundingClientRect()
+      scroller = el.firstElementChild
     }
 
     return (
