@@ -37,9 +37,8 @@ export default class ScrollHorizontal extends Component {
 
   componentDidUpdate = (prevProps) => {
     if (prevProps.animValues !== this.props.animValues) {
-      let currentAnimValues = !this.props.animValues ? this.state.animValues : 0;
       this.setState({
-        animValues: currentAnimValues + this.props.animValues
+        animValues: this.props.animValues
       }, this.calculate())
     } else {
       this.calculate()
