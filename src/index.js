@@ -37,9 +37,8 @@ export default class ScrollHorizontal extends Component {
 
   componentDidUpdate = (prevProps) => {
     if (prevProps.animValues !== this.props.animValues) {
-      let currentAnimValues = this.state.animValues
       this.setState({
-        animValues: currentAnimValues + this.props.animValues
+        animValues: this.props.animValues
       }, this.calculate())
     } else {
       this.calculate()
@@ -93,8 +92,13 @@ export default class ScrollHorizontal extends Component {
 
   caniscroll() {
     let el = DOM.findDOMNode(this.hScrollParent)
-    let rect = el.getBoundingClientRect()
-    let scroller = el.firstElementChild
+    let rect
+    let scroller
+
+    if (el) {
+      rect = el.getBoundingClientRect()
+      scroller = el.firstElementChild
+    }
 
     return (
       scroller.offsetLeft < rect.left || scroller.offsetLeft + scroller.offsetWidth > rect.width
@@ -108,28 +112,38 @@ export default class ScrollHorizontal extends Component {
     // Lazy to calculate, prevent max recurse call
     this.calculate.timer = setTimeout(() => {
       // Calculate the bounds of the scroll area
-      let el = DOM.findDOMNode(this.hScrollParent)
-      let rect = el.getBoundingClientRect()
+      try {
+        let el = DOM.findDOMNode(this.hScrollParent)
+        let rect
+  
+        let max
+        let win
 
-      let max = el.lastElementChild.scrollWidth
-      let win = el.offsetWidth
-
-      // Get the new animation values
-      var curr = this.state.animValues
-
-      // Establish the bounds. We do this every time b/c it might change.
-      var bounds = -(max - win)
-
-      // Logic to hold everything in place
-      if (curr >= 1) {
-        this.resetMin()
-      } else if (curr <= bounds) {
-        if (max > rect.width) {
-          var x = bounds + 1
-          this.resetMax(x)
-        } else {
-          this.resetMax(0)
+        if (el) {
+          rect = el.getBoundingClientRect()
+          max = el.lastElementChild.scrollWidth
+          win = el.offsetWidth
         }
+  
+        // Get the new animation values
+        var curr = this.state.animValues
+  
+        // Establish the bounds. We do this every time b/c it might change.
+        var bounds = -(max - win)
+  
+        // Logic to hold everything in place
+        if (curr >= 1) {
+          this.resetMin()
+        } else if (curr <= bounds) {
+          if (max > rect.width) {
+            var x = bounds + 1
+            this.resetMax(x)
+          } else {
+            this.resetMax(0)
+          }
+        }
+      } catch (error) {
+        console.log('ERROR FROM REACT-SCROLL-HORIZONTAL ON getBoundingClientRect()', error)
       }
     })
   }
@@ -174,7 +188,7 @@ export default class ScrollHorizontal extends Component {
               willChange: `transform`
             }
 
-            return <div style={scrollingElementStyles}>{children}</div>
+            return <div style={scrollingElementStyles} id='horizontal-scroll'>{children}</div>
           }}
         </Motion>
       </div>
@@ -189,7 +203,8 @@ ScrollHorizontal.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
   children: PropTypes.array.isRequired,
-  animValues: PropTypes.number
+  animValues: PropTypes.number,
+  resetAnimValues: PropTypes.bool,
 }
 
 ScrollHorizontal.defaultProps = {
@@ -198,5 +213,6 @@ ScrollHorizontal.defaultProps = {
   config: null,
   style: { width: `100%`, height: `100%` },
   className: null,
-  animValues: null
+  animValues: null,
+  resetAnimValues: true
 }
