@@ -1,0 +1,22 @@
+name: "💎 style"
+
+on: pull_request
+
+jobs:
+    style:
+        name: "💎 style"
+        runs-on: ubuntu-latest
+        steps:
+            - name: "📚 checkout"
+              uses: actions/checkout@v2.3.4
+            - name: "🟢 node"
+              uses: actions/setup-node@v2.1.4
+              with:
+                  node-version: 14
+                  registry-url: https://registry.npmjs.org/
+            - name: "📦 install"
+              run: npm ci
+            - name: "🧶 lint"
+              run: npm run lint
+            - name: "💾 format"
+              run: npm run format

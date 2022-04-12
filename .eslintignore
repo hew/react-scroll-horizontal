@@ -1,0 +1,21 @@
+# editor
+.vscode
+
+# dependencies
+.cache
+node_modules
+
+# build
+dist
+
+# test
+coverage
+
+# host
+.netlify
+
+# secrets
+.env*
+
+# logs
+debug.log

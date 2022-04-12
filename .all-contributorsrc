@@ -1,0 +1,28 @@
+{
+    "projectName": "react-library-starter",
+    "projectOwner": "bradgarropy",
+    "repoType": "github",
+    "repoHost": "https://github.com",
+    "files": [
+        "readme.md",
+        "contributing.md"
+    ],
+    "imageSize": 100,
+    "contributorsPerLine": 7,
+    "contributorsSortAlphabetically": false,
+    "skipCi": false,
+    "contributors": [
+        {
+            "login": "bradgarropy",
+            "name": "Brad Garropy",
+            "avatar_url": "https://avatars.githubusercontent.com/u/11336745?v=4",
+            "profile": "https://bradgarropy.com",
+            "contributions": [
+                "code",
+                "doc",
+                "test",
+                "infra"
+            ]
+        }
+    ]
+}

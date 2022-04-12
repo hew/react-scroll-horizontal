@@ -1,0 +1,26 @@
+name: "🧪 test"
+
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+
+jobs:
+    test:
+        name: "🧪 test"
+        runs-on: ubuntu-latest
+        steps:
+            - name: "📚 checkout"
+              uses: actions/checkout@v2.3.4
+            - name: "🟢 node"
+              uses: actions/setup-node@v2.1.4
+              with:
+                  node-version: 14
+                  registry-url: https://registry.npmjs.org/
+            - name: "📦 install"
+              run: npm ci
+            - name: "🧪 test"
+              run: npm run test
+            - name: "☂️ coverage"
+              uses: codecov/codecov-action@v1.2.1
