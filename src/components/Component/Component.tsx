@@ -1,5 +1,5 @@
-import {FC, Ref, useEffect, useRef, useState} from 'react'
-import scrollHorizontal from './scroll-horizontal'
+import {FC, useRef, useState} from 'react'
+import useScrollHorizontal from './hooks'
 
 interface ComponentProps {
   name: string
@@ -32,10 +32,11 @@ const Component: FC<ComponentProps> = ({}) => {
     })
   }
 
-  const {animationValues} = scrollHorizontal({
+  const {animationValues} = useScrollHorizontal({
     parentRef,
     onStart,
     onEnd,
+    isEndless: true
   })
 
   const scrollingElementStyles = offset => ({
@@ -58,6 +59,7 @@ const Component: FC<ComponentProps> = ({}) => {
     display: 'flex',
   }
 
+  console.log(parentRef, "parentRef")
   return (
     <div>
       <div style={parentStyles} ref={parentRef}>
